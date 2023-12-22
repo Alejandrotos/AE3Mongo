@@ -7,7 +7,7 @@ public class Controlador {
 	private VistaInicio Inicio;
 	//private VistaRegistro Registro = new VistaRegistro();
 	//private VistaInicioSesion InicioSesion = new VistaInicioSesion();
-	//private VistaPrincipal Principal = new VistaPrincipal();
+	private VistaPrincipal Principal = new VistaPrincipal();
 	private ActionListener actionListenerbtnInicioDeSesion;
 	private ActionListener actionListenerbtnRegistrarse;
 
