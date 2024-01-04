@@ -35,20 +35,20 @@ public class VistaPrincipal extends JFrame {
 		
 		btnJugar = new JButton("Jugar");
 		btnJugar.setBounds(50, 82, 157, 25);
-		btnJugar.setForeground(Color.WHITE);
+		btnJugar.setForeground(Color.DARK_GRAY);
 		btnJugar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnJugar.setBackground(Color.DARK_GRAY);
 		contentPane.add(btnJugar);
 		
 		btnGuardar = new JButton("Guardar");
-		btnGuardar.setForeground(Color.WHITE);
+		btnGuardar.setForeground(Color.DARK_GRAY);
 		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGuardar.setBackground(Color.DARK_GRAY);
 		btnGuardar.setBounds(50, 185, 157, 25);
 		contentPane.add(btnGuardar);
 		
 		btnSalDeLa = new JButton("Saló de la fama");
-		btnSalDeLa.setForeground(Color.WHITE);
+		btnSalDeLa.setForeground(Color.DARK_GRAY);
 		btnSalDeLa.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnSalDeLa.setBackground(Color.DARK_GRAY);
 		btnSalDeLa.setBounds(50, 289, 157, 25);
