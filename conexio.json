@@ -1,0 +1,10 @@
+{
+	"ip": "localhost",
+	"port": 27017,
+	"database": "AE03Mongo",
+	"collection": {
+		"imatges": "imatges",
+		"usuaris": "usuaris",
+		"records": "records"
+	}
+}
