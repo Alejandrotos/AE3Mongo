@@ -77,6 +77,19 @@ public class Model {
             JOptionPane.showMessageDialog(null, "Usuari fet" + userString);
         }
 	}
+	
+	public static void iniciUsuari(String userString, String pass) {
+		Document user = new Document();
+		Bson filter = Filters.eq("user", userString);
+		Document result = collecioUsuaris.find(filter).first();
+		Bson filterContra = Filters.eq("pass", pass);
+		Document resultContra = collecioUsuaris.find(filterContra).first();
+        if (result != null && resultContra != null) {
+        	JOptionPane.showMessageDialog(null, "Usuari i contrasenya correctes");
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes");
+        }
+	}
 
 	public static void iniciarPartida() {
 		iniciPartida = Instant.now();

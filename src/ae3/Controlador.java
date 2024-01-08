@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 public class Controlador {
 	private Model Model;
 	private VistaInicio Inici;
-	// private VistaRegistro Registro = new VistaRegistro();
+	private VistaRegistro Registro = new VistaRegistro();
 	private VistaInicioSesion IniciSesio = new VistaInicioSesion();
 	// private VistaPrincipal Principal = new VistaPrincipal();
 	private ActionListener actionListenerbtnIniciDeSesio;
@@ -22,12 +22,19 @@ public class Controlador {
 
 	public void Control() {
 		actionListenerbtnIniciDeSesio = new ActionListener() {
+		
 			public void actionPerformed(ActionEvent e) {
 				IniciSesio.setVisible(true);
 			}
 		};
 		Inici.getbtnIniciDeSesio().addActionListener(actionListenerbtnIniciDeSesio);
 
+		actionListenerbtnRegistrarse = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registro.setVisible(true);
+			}
+		};
+		Inici.getBtnRegistrarse().addActionListener(actionListenerbtnRegistrarse);
 	}
 }
 //Ejemplo controlador de otra evaluable:

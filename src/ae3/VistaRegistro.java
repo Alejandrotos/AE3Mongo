@@ -89,7 +89,7 @@ public class VistaRegistro extends JFrame {
 		btnRegistroEnRegistro.setBounds(76, 230, 157, 25);
 		panel.add(btnRegistroEnRegistro);
 		
-		setVisible(true);
+		setVisible(false);
 	}
 
 	public JButton getBtnRegistroEnRegistro() {
