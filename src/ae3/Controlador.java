@@ -4,15 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+import javax.swing.plaf.synth.Region;
 
 public class Controlador {
 	private Model Model;
 	private VistaInicio Inici;
 	// private VistaRegistro Registro = new VistaRegistro();
 	private VistaInicioSesion IniciSesio = new VistaInicioSesion();
-	// private VistaPrincipal Principal = new VistaPrincipal();
+	private VistaPrincipal vistaPrincipal = new VistaPrincipal(); // setVisible(true) para hacer pruebas sin iniciar sesion
 	private ActionListener actionListenerbtnIniciDeSesio;
 	private ActionListener actionListenerbtnRegistrarse;
+	//Aqui irían ActionsListeners de VistaInicioSesion
+	//Aqui irían ActionsListeners de VistaInicioSesion
+	private ActionListener actionListenerbtnJugar;
 
 	Controlador(VistaInicio Inici, Model Model) {
 		this.Inici = Inici;
@@ -27,7 +31,15 @@ public class Controlador {
 			}
 		};
 		Inici.getbtnIniciDeSesio().addActionListener(actionListenerbtnIniciDeSesio);
-
+		
+		
+		//Funcionalidades de VistaPrincipal
+		actionListenerbtnJugar = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		};
+		vistaPrincipal.getBtnJugar().addActionListener(actionListenerbtnJugar);
 	}
 }
 //Ejemplo controlador de otra evaluable:
