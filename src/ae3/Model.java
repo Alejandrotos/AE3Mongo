@@ -91,6 +91,7 @@ public class Model {
 	}
 	
 	public void extraureImatge() {
+		// PDF clase
 		byte[] btDataFile = Base64.decodeBase64(string64);
 		BufferedImage imatge = ImageIO.read(new ByteArrayInputStream(btDataFile));
 		Image imatge = imatge.getScaledInstance(-1, 400, java.awt.Image.SCALE_SMOOTH);
