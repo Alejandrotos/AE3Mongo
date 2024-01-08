@@ -16,7 +16,7 @@ public class VistaInicio extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JButton btnInicioDeSesion;
+	private JButton btnIniciDeSesio;
 	private JButton btnRegistrarse;
 
 	/**
@@ -32,16 +32,16 @@ public class VistaInicio extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		btnInicioDeSesion = new JButton("Inici de sessió");
-		btnInicioDeSesion.addActionListener(new ActionListener() {
+		btnIniciDeSesio = new JButton("Inici de sessió");
+		btnIniciDeSesio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnInicioDeSesion.setForeground(Color.WHITE);
-		btnInicioDeSesion.setBackground(Color.DARK_GRAY);
-		btnInicioDeSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnInicioDeSesion.setBounds(143, 90, 157, 25);
-		contentPane.add(btnInicioDeSesion);
+		btnIniciDeSesio.setForeground(Color.WHITE);
+		btnIniciDeSesio.setBackground(Color.DARK_GRAY);
+		btnIniciDeSesio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnIniciDeSesio.setBounds(143, 90, 157, 25);
+		contentPane.add(btnIniciDeSesio);
 		
 		JLabel lblNewLabel = new JLabel("Benvinguts a la nostra aplicació de memòria");
 		lblNewLabel.setForeground(Color.WHITE);
@@ -59,8 +59,8 @@ public class VistaInicio extends JFrame {
 		setVisible(true);
 	}
 
-	public JButton getBtnInicioDeSesion() {
-		return btnInicioDeSesion;
+	public JButton getbtnIniciDeSesio() {
+		return btnIniciDeSesio;
 	}
 
 	public JButton getBtnRegistrarse() {

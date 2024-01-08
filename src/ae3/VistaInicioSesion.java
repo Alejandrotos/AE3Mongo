@@ -18,7 +18,7 @@ public class VistaInicioSesion extends JFrame {
 	private JTextField textFieldNom;
 	private JTextField textFieldContrasenya;
 	private JTextField textFieldContrasenyaRepetida;
-	private JButton btnInicioDeSesionEnincideSesion;
+	private JButton btnIniciDeSesioEnincideSesion;
 
 
 	/**
@@ -78,19 +78,19 @@ public class VistaInicioSesion extends JFrame {
 		textFieldContrasenyaRepetida.setBounds(27, 199, 242, 20);
 		panel.add(textFieldContrasenyaRepetida);
 		
-		btnInicioDeSesionEnincideSesion = new JButton("Inici de sessió");
-		btnInicioDeSesionEnincideSesion.setForeground(Color.DARK_GRAY);
-		btnInicioDeSesionEnincideSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnInicioDeSesionEnincideSesion.setBackground(Color.WHITE);
-		btnInicioDeSesionEnincideSesion.setBounds(76, 230, 157, 25);
-		panel.add(btnInicioDeSesionEnincideSesion);
+		btnIniciDeSesioEnincideSesion = new JButton("Inici de sessió");
+		btnIniciDeSesioEnincideSesion.setForeground(Color.DARK_GRAY);
+		btnIniciDeSesioEnincideSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnIniciDeSesioEnincideSesion.setBackground(Color.WHITE);
+		btnIniciDeSesioEnincideSesion.setBounds(76, 230, 157, 25);
+		panel.add(btnIniciDeSesioEnincideSesion);
 		
-		setVisible(true);
+		setVisible(false);
 	}
 
 
-	public JButton getBtnInicioDeSesionEnincideSesion() {
-		return btnInicioDeSesionEnincideSesion;
+	public JButton getbtnIniciDeSesioEnincideSesion() {
+		return btnIniciDeSesioEnincideSesion;
 	}
 	
 }
