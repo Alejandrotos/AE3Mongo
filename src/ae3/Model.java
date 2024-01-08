@@ -20,6 +20,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.TimeZone;
 
 import javax.swing.JOptionPane;
@@ -88,7 +89,21 @@ public class Model {
 	public Instant getIniciPartida() {
 		return iniciPartida;
 	}
+	
+	public void extraureImatge() {
+		byte[] btDataFile = Base64.decodeBase64(string64);
+		BufferedImage imatge = ImageIO.read(new ByteArrayInputStream(btDataFile));
+		Image imatge = imatge.getScaledInstance(-1, 400, java.awt.Image.SCALE_SMOOTH);
+		ImageIO.write(imatge, "jpg", new File ("imatge.jpg"));
+	}
 
+	private static void selectImatgeB64() {
+		Document imatges = new Document();
+		record.append("usuario", usuari).append("dificultad", dificultat).append("timestamp", generateTimestamp())
+				.append("duracion", duracioTotal);
+
+		collecioRecords.insertOne(record);
+	}
 	private static String generateTimestamp() {
 		String formato = "yyyyMMdd_HHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(formato);
