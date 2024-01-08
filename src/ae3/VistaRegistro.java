@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaRegistro extends JFrame {
 
@@ -77,6 +79,10 @@ public class VistaRegistro extends JFrame {
 		panel.add(textFieldContrasenyaRepetidaRegistro);
 		
 		btnRegistroEnRegistro = new JButton("Registrarse");
+		btnRegistroEnRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnRegistroEnRegistro.setForeground(Color.DARK_GRAY);
 		btnRegistroEnRegistro.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnRegistroEnRegistro.setBackground(Color.WHITE);
@@ -84,6 +90,10 @@ public class VistaRegistro extends JFrame {
 		panel.add(btnRegistroEnRegistro);
 		
 		setVisible(true);
+	}
+
+	public JButton getBtnRegistroEnRegistro() {
+		return btnRegistroEnRegistro;
 	}
 
 }

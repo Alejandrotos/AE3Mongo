@@ -1,5 +1,6 @@
 package ae3;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Controlador {
@@ -18,6 +19,10 @@ public class Controlador {
 	}
 	
 	public void Control() {
-		
+		actionListenerbtnInicioDeSesion = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+			VistaInicioSesion InicioSesion = new VistaInicioSesion();
+			};
 	}
 }
