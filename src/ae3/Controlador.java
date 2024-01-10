@@ -10,7 +10,7 @@ public class Controlador {
 	private VistaInicio Inici;
 	private VistaRegistro Registro = new VistaRegistro();
 	private VistaInicioSesion IniciSesio = new VistaInicioSesion();
-	// private VistaPrincipal Principal = new VistaPrincipal();
+	private VistaPrincipal Principal = new VistaPrincipal();
 	private ActionListener actionListenerbtnIniciDeSesio;
 	private ActionListener actionListenerbtnRegistrarse;
 	private ActionListener actionListenerbtnIniciDeSesioEnincideSesion;
@@ -36,6 +36,28 @@ public class Controlador {
 			}
 		};
 		Inici.getBtnRegistrarse().addActionListener(actionListenerbtnRegistrarse);
+		
+		actionListenerbtnIniciDeSesioEnincideSesion = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nom = IniciSesio.getTextFieldNom().getText();
+				String contrasenya = IniciSesio.getTextFieldContrasenya().getText();
+				String contrasenyaRepetida = IniciSesio.getTextFieldContrasenyaRepetida().getText();
+				if (nom.isEmpty() || contrasenya.isEmpty() || contrasenyaRepetida.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}else if(!contrasenya.equals(contrasenyaRepetida)){
+					JOptionPane.showMessageDialog(null, "Les contrasenyes no son el mateix.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}else if(Model.iniciUsuari(nom, contrasenya)){
+					JOptionPane.showMessageDialog(null, "Usuari i contrasenya correctes");
+					Principal.setVisible(true);
+					IniciSesio.setVisible(false);
+				}else {
+					JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes");
+				}
+			}
+		};
+		IniciSesio.getbtnIniciDeSesioEnincideSesion().addActionListener(actionListenerbtnIniciDeSesioEnincideSesion);
 	}
 }
 //Ejemplo controlador de otra evaluable:

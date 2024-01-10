@@ -19,7 +19,7 @@ public class VistaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private JButton btnJugar;
 	private JButton btnGuardar;
-	private JButton btnSalDeLa;
+	private JButton btnSaloDeLa;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	/**
@@ -49,20 +49,20 @@ public class VistaPrincipal extends JFrame {
 		btnGuardar.setBounds(50, 185, 157, 25);
 		contentPane.add(btnGuardar);
 		
-		btnSalDeLa = new JButton("Saló de la fama");
-		btnSalDeLa.setForeground(Color.DARK_GRAY);
-		btnSalDeLa.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSalDeLa.setBackground(Color.DARK_GRAY);
-		btnSalDeLa.setBounds(50, 289, 157, 25);
-		contentPane.add(btnSalDeLa);
+		btnSaloDeLa = new JButton("Saló de la fama");
+		btnSaloDeLa.setForeground(Color.DARK_GRAY);
+		btnSaloDeLa.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSaloDeLa.setBackground(Color.DARK_GRAY);
+		btnSaloDeLa.setBounds(50, 289, 157, 25);
+		contentPane.add(btnSaloDeLa);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("4x4");
-		rdbtnNewRadioButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		rdbtnNewRadioButton.setForeground(Color.WHITE);
-		rdbtnNewRadioButton.setBackground(Color.DARK_GRAY);
-		buttonGroup.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setBounds(50, 114, 64, 23);
-		contentPane.add(rdbtnNewRadioButton);
+		JRadioButton rdbtn4x4 = new JRadioButton("4x4");
+		rdbtn4x4.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtn4x4.setForeground(Color.WHITE);
+		rdbtn4x4.setBackground(Color.DARK_GRAY);
+		buttonGroup.add(rdbtn4x4);
+		rdbtn4x4.setBounds(50, 114, 64, 23);
+		contentPane.add(rdbtn4x4);
 		
 		JRadioButton rdbtn4x2 = new JRadioButton("4x2");
 		rdbtn4x2.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -189,14 +189,28 @@ public class VistaPrincipal extends JFrame {
 		contentPane.add(btnImgr_4_4);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 339, 157, 170);
+		scrollPane.setBounds(50, 359, 157, 170);
 		contentPane.add(scrollPane);
 		
 		JTextArea textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		textArea.setLineWrap(true);
 		
-		setVisible(true);
+		JRadioButton rdbtn4x2Fama = new JRadioButton("4x2");
+		rdbtn4x2Fama.setForeground(Color.WHITE);
+		rdbtn4x2Fama.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtn4x2Fama.setBackground(Color.DARK_GRAY);
+		rdbtn4x2Fama.setBounds(143, 322, 64, 23);
+		contentPane.add(rdbtn4x2Fama);
+		
+		JRadioButton rdbtn4x4Fama = new JRadioButton("4x4");
+		rdbtn4x4Fama.setForeground(Color.WHITE);
+		rdbtn4x4Fama.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtn4x4Fama.setBackground(Color.DARK_GRAY);
+		rdbtn4x4Fama.setBounds(50, 322, 64, 23);
+		contentPane.add(rdbtn4x4Fama);
+		
+		setVisible(false);
 	}
 
 	public JButton getBtnJugar() {
@@ -208,6 +222,6 @@ public class VistaPrincipal extends JFrame {
 	}
 
 	public JButton getBtnSalDeLa() {
-		return btnSalDeLa;
+		return btnSaloDeLa;
 	}
 }

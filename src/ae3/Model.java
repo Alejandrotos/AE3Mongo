@@ -2,6 +2,7 @@ package ae3;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.json.JSONObject;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -35,27 +36,27 @@ public class Model {
 	private static String timestamp;
 
 	public static void conexioDBMongo() {
-		try {
+        try {
+            // Leer el contenido del archivo JSON
+            String jsonString = new String(Files.readAllBytes(Paths.get("conexion.json")));
 
-			String jsonConfig = new String(Files.readAllBytes(Paths.get("conexio.json")));
+            // Crear un objeto JSONObject a partir de la cadena leída
+            JSONObject configDoc = new JSONObject(jsonString);
 
-			Document configDoc = Document.parse(jsonConfig);
+            String ip = configDoc.getString("ip");
+            int port = configDoc.getInt("port");
+            String databaseName = configDoc.getString("database");
 
-			String ip = configDoc.getString("ip");
-			int port = configDoc.getInteger("port");
-			String databaseName = configDoc.getString("database");
+            mongoClient = MongoClients.create(String.format("mongodb://%s:%d", ip, port));
+            database = mongoClient.getDatabase(databaseName);
 
-			mongoClient = MongoClients.create(String.format("mongodb://%s:%d", ip, port));
-			database = mongoClient.getDatabase(databaseName);
-
-			collecioRecords = database.getCollection("records");
-			collecioImatges = database.getCollection("imatges");
-			collecioUsuaris = database.getCollection("usuaris");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+            collecioRecords = database.getCollection("records");
+            collecioImatges = database.getCollection("img");
+            collecioUsuaris = database.getCollection("usuarios");
+        } catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
 	public static void insertRecord(String usuari, int dificultat) {
 		Document record = new Document();
@@ -66,6 +67,7 @@ public class Model {
 	}
 
 	public static void insertUsuari(String userString, String pass) {
+		conexioDBMongo();
 		Document user = new Document();
 		Bson filter = Filters.eq("user", userString);
 		Document result = collecioUsuaris.find(filter).first();
@@ -79,16 +81,15 @@ public class Model {
 	}
 	
 	public static boolean iniciUsuari(String userString, String pass) {
+		conexioDBMongo();
 		Document user = new Document();
 		Bson filter = Filters.eq("user", userString);
 		Document result = collecioUsuaris.find(filter).first();
 		Bson filterContra = Filters.eq("pass", pass);
 		Document resultContra = collecioUsuaris.find(filterContra).first();
         if (result != null && resultContra != null) {
-        	JOptionPane.showMessageDialog(null, "Usuari i contrasenya correctes");
         	return true;
         } else {
-            JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes");
             return false;
         }
 	}
@@ -105,20 +106,6 @@ public class Model {
 		return iniciPartida;
 	}
 	
-	public void extraureImatge() {
-		byte[] btDataFile = Base64.decodeBase64(string64);
-		BufferedImage imatge = ImageIO.read(new ByteArrayInputStream(btDataFile));
-		Image imatge = imatge.getScaledInstance(-1, 400, java.awt.Image.SCALE_SMOOTH);
-		ImageIO.write(imatge, "jpg", new File ("imatge.jpg"));
-	}
-
-	private static void selectImatgeB64() {
-		Document imatges = new Document();
-		record.append("usuario", usuari).append("dificultad", dificultat).append("timestamp", generateTimestamp())
-				.append("duracion", duracioTotal);
-
-		collecioRecords.insertOne(record);
-	}
 	private static String generateTimestamp() {
 		String formato = "yyyyMMdd_HHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(formato);
