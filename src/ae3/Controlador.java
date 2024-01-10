@@ -1,8 +1,11 @@
 package ae3;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.synth.Region;
 
@@ -11,11 +14,12 @@ public class Controlador {
 	private VistaInicio Inici;
 	// private VistaRegistro Registro = new VistaRegistro();
 	private VistaInicioSesion IniciSesio = new VistaInicioSesion();
-	private VistaPrincipal vistaPrincipal = new VistaPrincipal(); // setVisible(true) para hacer pruebas sin iniciar sesion
+	private VistaPrincipal vistaPrincipal = new VistaPrincipal(); // setVisible(true) para hacer pruebas sin iniciar
+																	// sesion
 	private ActionListener actionListenerbtnIniciDeSesio;
 	private ActionListener actionListenerbtnRegistrarse;
-	//Aqui irían ActionsListeners de VistaInicioSesion
-	//Aqui irían ActionsListeners de VistaInicioSesion
+	// Aqui irían ActionsListeners de VistaInicioSesion
+	// Aqui irían ActionsListeners de VistaInicioSesion
 	private ActionListener actionListenerbtnJugar;
 
 	Controlador(VistaInicio Inici, Model Model) {
@@ -31,12 +35,31 @@ public class Controlador {
 			}
 		};
 		Inici.getbtnIniciDeSesio().addActionListener(actionListenerbtnIniciDeSesio);
-		
-		
-		//Funcionalidades de VistaPrincipal
+
+		// Funcionalidades de VistaPrincipal
 		actionListenerbtnJugar = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				JButton[] botonsImatges = VistaPrincipal.getButtonsImatgesArray();
+
+				// Modo de juego 4x2
+				if (vistaPrincipal.getRdbtn4x2().isSelected()) {
+					for (int i = 0; i < 8; i++) {
+						botonsImatges[i].setEnabled(true);
+						botonsImatges[i].setBackground(Color.WHITE);
+
+					}
+					return;
+
+				}
+				// Modo de juego 4x4
+
+				for (int i = 0; i < botonsImatges.length; i++) {
+					botonsImatges[i].setEnabled(true);
+					botonsImatges[i].setBackground(Color.WHITE);
+
+				}
+				return;
+
 			}
 		};
 		vistaPrincipal.getBtnJugar().addActionListener(actionListenerbtnJugar);
