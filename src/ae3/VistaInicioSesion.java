@@ -21,6 +21,21 @@ public class VistaInicioSesion extends JFrame {
 	private JButton btnIniciDeSesioEnincideSesion;
 
 
+	public JTextField getTextFieldNom() {
+		return textFieldNom;
+	}
+
+
+	public JTextField getTextFieldContrasenya() {
+		return textFieldContrasenya;
+	}
+
+
+	public JTextField getTextFieldContrasenyaRepetida() {
+		return textFieldContrasenyaRepetida;
+	}
+
+
 	/**
 	 * Create the frame.
 	 */

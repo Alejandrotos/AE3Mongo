@@ -78,7 +78,7 @@ public class Model {
         }
 	}
 	
-	public static void iniciUsuari(String userString, String pass) {
+	public static boolean iniciUsuari(String userString, String pass) {
 		Document user = new Document();
 		Bson filter = Filters.eq("user", userString);
 		Document result = collecioUsuaris.find(filter).first();
@@ -86,8 +86,10 @@ public class Model {
 		Document resultContra = collecioUsuaris.find(filterContra).first();
         if (result != null && resultContra != null) {
         	JOptionPane.showMessageDialog(null, "Usuari i contrasenya correctes");
+        	return true;
         } else {
             JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes");
+            return false;
         }
 	}
 

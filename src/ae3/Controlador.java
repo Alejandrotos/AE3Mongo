@@ -13,6 +13,7 @@ public class Controlador {
 	// private VistaPrincipal Principal = new VistaPrincipal();
 	private ActionListener actionListenerbtnIniciDeSesio;
 	private ActionListener actionListenerbtnRegistrarse;
+	private ActionListener actionListenerbtnIniciDeSesioEnincideSesion;
 
 	Controlador(VistaInicio Inici, Model Model) {
 		this.Inici = Inici;
