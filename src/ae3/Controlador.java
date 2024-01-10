@@ -15,6 +15,9 @@ public class Controlador {
 	private ActionListener actionListenerbtnRegistrarse;
 	private ActionListener actionListenerbtnIniciDeSesioEnincideSesion;
 	private ActionListener actionListenerbtnRegistroEnRegistro;
+	private ActionListener actionListenerbtnTornarRegistre;
+	private ActionListener actionListenerbtnTornarIniciSessio;
+	private ActionListener actionListenerbtnSaloDeLa;
 
 	Controlador(VistaInicio Inici, Model Model) {
 		this.Inici = Inici;
@@ -24,7 +27,7 @@ public class Controlador {
 
 	public void Control() {
 		actionListenerbtnIniciDeSesio = new ActionListener() {
-		
+
 			public void actionPerformed(ActionEvent e) {
 				IniciSesio.setVisible(true);
 				Inici.setVisible(false);
@@ -39,7 +42,7 @@ public class Controlador {
 			}
 		};
 		Inici.getBtnRegistrarse().addActionListener(actionListenerbtnRegistrarse);
-		
+
 		actionListenerbtnIniciDeSesioEnincideSesion = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nom = IniciSesio.getTextFieldNom().getText();
@@ -47,17 +50,17 @@ public class Controlador {
 				if (nom.isEmpty() || contrasenya.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
 							JOptionPane.ERROR_MESSAGE);
-				}else if(Model.iniciUsuari(nom, contrasenya)){
+				} else if (Model.iniciUsuari(nom, contrasenya)) {
 					JOptionPane.showMessageDialog(null, "Usuari i contrasenya correctes");
 					Principal.setVisible(true);
 					IniciSesio.setVisible(false);
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes");
 				}
 			}
 		};
 		IniciSesio.getbtnIniciDeSesioEnincideSesion().addActionListener(actionListenerbtnIniciDeSesioEnincideSesion);
-		
+
 		actionListenerbtnRegistroEnRegistro = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nom = Registro.getTextFieldNomRegistro().getText();
@@ -66,19 +69,46 @@ public class Controlador {
 				if (nom.isEmpty() || contrasenya.isEmpty() || contrasenyaRepetida.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
 							JOptionPane.ERROR_MESSAGE);
-				}else if(!contrasenya.equals(contrasenyaRepetida)){
+				} else if (!contrasenya.equals(contrasenyaRepetida)) {
 					JOptionPane.showMessageDialog(null, "La contrasenya no es igual.", "Error",
 							JOptionPane.ERROR_MESSAGE);
-				}else if(Model.insertUsuari(nom, contrasenya)){
+				} else if (Model.insertUsuari(nom, contrasenya)) {
 					JOptionPane.showMessageDialog(null, "Usuari fet");
 					IniciSesio.setVisible(true);
 					Registro.setVisible(false);
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(null, "Usuari ya creat");
 				}
 			}
 		};
 		Registro.getBtnRegistroEnRegistro().addActionListener(actionListenerbtnRegistroEnRegistro);
+
+		actionListenerbtnTornarRegistre = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Inici.setVisible(true);
+				Registro.setVisible(false);
+			}
+		};
+		Registro.getBtnTornarRegistre().addActionListener(actionListenerbtnTornarRegistre);
+
+		actionListenerbtnTornarIniciSessio = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Inici.setVisible(true);
+				IniciSesio.setVisible(false);
+			}
+		};
+		IniciSesio.getBtnTornarIniciSessio().addActionListener(actionListenerbtnTornarIniciSessio);
+
+		actionListenerbtnSaloDeLa = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Inici.setVisible(true);
+				IniciSesio.setVisible(false);
+			}
+		};
+		Principal.getBtnSaloDeLa().addActionListener(actionListenerbtnSaloDeLa);
 	}
 }
 //Ejemplo controlador de otra evaluable:

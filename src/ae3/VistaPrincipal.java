@@ -221,7 +221,7 @@ public class VistaPrincipal extends JFrame {
 		return btnGuardar;
 	}
 
-	public JButton getBtnSalDeLa() {
+	public JButton getBtnSaloDeLa() {
 		return btnSaloDeLa;
 	}
 }

@@ -3,6 +3,7 @@ package ae3;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,7 +21,7 @@ public class VistaRegistro extends JFrame {
 	private JTextField textFieldContrasenyaRegistro;
 	private JTextField textFieldContrasenyaRepetidaRegistro;
 	private JButton btnRegistroEnRegistro;
-
+	private JButton btnTornarRegistre;
 	/**
 	 * Create the frame.
 	 */
@@ -89,6 +90,13 @@ public class VistaRegistro extends JFrame {
 		btnRegistroEnRegistro.setBounds(76, 230, 157, 25);
 		panel.add(btnRegistroEnRegistro);
 		
+		btnTornarRegistre = new JButton("<---");
+		btnTornarRegistre.setForeground(Color.DARK_GRAY);
+		btnTornarRegistre.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnTornarRegistre.setBackground(Color.WHITE);
+		btnTornarRegistre.setBounds(10, 11, 85, 43);
+		panel.add(btnTornarRegistre);
+		
 		setVisible(false);
 	}
 
@@ -107,6 +115,12 @@ public class VistaRegistro extends JFrame {
 	public JTextField getTextFieldContrasenyaRepetidaRegistro() {
 		return textFieldContrasenyaRepetidaRegistro;
 	}
+
+	public JButton getBtnTornarRegistre() {
+		return btnTornarRegistre;
+	}
+
+	
 	
 	
 }

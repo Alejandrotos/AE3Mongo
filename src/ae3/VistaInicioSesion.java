@@ -18,7 +18,7 @@ public class VistaInicioSesion extends JFrame {
 	private JTextField textFieldNom;
 	private JTextField textFieldContrasenya;
 	private JButton btnIniciDeSesioEnincideSesion;
-
+	private JButton btnTornarIniciSessio;
 
 	/**
 	 * Create the frame.
@@ -45,7 +45,7 @@ public class VistaInicioSesion extends JFrame {
 		panel.add(lblNom);
 		
 		JLabel lblIniciDeSessi = new JLabel("Inici de sessió");
-		lblIniciDeSessi.setBounds(89, 11, 127, 22);
+		lblIniciDeSessi.setBounds(106, 11, 127, 22);
 		panel.add(lblIniciDeSessi);
 		lblIniciDeSessi.setForeground(Color.DARK_GRAY);
 		lblIniciDeSessi.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -73,12 +73,12 @@ public class VistaInicioSesion extends JFrame {
 		btnIniciDeSesioEnincideSesion.setBounds(76, 230, 157, 25);
 		panel.add(btnIniciDeSesioEnincideSesion);
 		
-		JButton btnTornar = new JButton("<---");
-		btnTornar.setBounds(10, 11, 62, 25);
-		panel.add(btnTornar);
-		btnTornar.setForeground(Color.DARK_GRAY);
-		btnTornar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnTornar.setBackground(Color.WHITE);
+		btnTornarIniciSessio = new JButton("<---");
+		btnTornarIniciSessio.setBounds(10, 11, 81, 43);
+		panel.add(btnTornarIniciSessio);
+		btnTornarIniciSessio.setForeground(Color.DARK_GRAY);
+		btnTornarIniciSessio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnTornarIniciSessio.setBackground(Color.WHITE);
 		
 		setVisible(false);
 	}
@@ -96,4 +96,11 @@ public class VistaInicioSesion extends JFrame {
 	public JTextField getTextFieldContrasenya() {
 		return textFieldContrasenya;
 	}
+
+
+	public JButton getBtnTornarIniciSessio() {
+		return btnTornarIniciSessio;
+	}
+	
+	
 }
