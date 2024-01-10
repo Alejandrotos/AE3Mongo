@@ -17,7 +17,6 @@ public class VistaInicioSesion extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNom;
 	private JTextField textFieldContrasenya;
-	private JTextField textFieldContrasenyaRepetida;
 	private JButton btnIniciDeSesioEnincideSesion;
 
 
@@ -59,24 +58,13 @@ public class VistaInicioSesion extends JFrame {
 		JLabel lblContrasenya = new JLabel("Contrasenya:");
 		lblContrasenya.setForeground(Color.DARK_GRAY);
 		lblContrasenya.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblContrasenya.setBounds(27, 118, 98, 14);
+		lblContrasenya.setBounds(29, 142, 98, 14);
 		panel.add(lblContrasenya);
 		
 		textFieldContrasenya = new JTextField();
 		textFieldContrasenya.setColumns(10);
-		textFieldContrasenya.setBounds(27, 143, 242, 20);
+		textFieldContrasenya.setBounds(27, 167, 242, 20);
 		panel.add(textFieldContrasenya);
-		
-		JLabel lblRepiteLaContrasenya = new JLabel("Repite la contrasenya:");
-		lblRepiteLaContrasenya.setForeground(Color.DARK_GRAY);
-		lblRepiteLaContrasenya.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblRepiteLaContrasenya.setBounds(27, 174, 170, 14);
-		panel.add(lblRepiteLaContrasenya);
-		
-		textFieldContrasenyaRepetida = new JTextField();
-		textFieldContrasenyaRepetida.setColumns(10);
-		textFieldContrasenyaRepetida.setBounds(27, 199, 242, 20);
-		panel.add(textFieldContrasenyaRepetida);
 		
 		btnIniciDeSesioEnincideSesion = new JButton("Inici de sessió");
 		btnIniciDeSesioEnincideSesion.setForeground(Color.DARK_GRAY);
@@ -84,6 +72,13 @@ public class VistaInicioSesion extends JFrame {
 		btnIniciDeSesioEnincideSesion.setBackground(Color.WHITE);
 		btnIniciDeSesioEnincideSesion.setBounds(76, 230, 157, 25);
 		panel.add(btnIniciDeSesioEnincideSesion);
+		
+		JButton btnTornar = new JButton("<---");
+		btnTornar.setBounds(10, 11, 62, 25);
+		panel.add(btnTornar);
+		btnTornar.setForeground(Color.DARK_GRAY);
+		btnTornar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnTornar.setBackground(Color.WHITE);
 		
 		setVisible(false);
 	}
@@ -101,10 +96,4 @@ public class VistaInicioSesion extends JFrame {
 	public JTextField getTextFieldContrasenya() {
 		return textFieldContrasenya;
 	}
-
-
-	public JTextField getTextFieldContrasenyaRepetida() {
-		return textFieldContrasenyaRepetida;
-	}
-	
 }

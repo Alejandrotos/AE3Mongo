@@ -66,17 +66,17 @@ public class Model {
 		collecioRecords.insertOne(record);
 	}
 
-	public static void insertUsuari(String userString, String pass) {
+	public static boolean insertUsuari(String userString, String pass) {
 		conexioDBMongo();
 		Document user = new Document();
 		Bson filter = Filters.eq("user", userString);
 		Document result = collecioUsuaris.find(filter).first();
         if (result != null) {
-        	JOptionPane.showMessageDialog(null, "Usuari" + userString + "ya creat");
+        	return false;
         } else {
             user.append("user", userString).append("pass", hashPassword(pass));
             collecioUsuaris.insertOne(user);
-            JOptionPane.showMessageDialog(null, "Usuari fet" + userString);
+            return true;
         }
 	}
 	

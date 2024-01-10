@@ -14,6 +14,7 @@ public class Controlador {
 	private ActionListener actionListenerbtnIniciDeSesio;
 	private ActionListener actionListenerbtnRegistrarse;
 	private ActionListener actionListenerbtnIniciDeSesioEnincideSesion;
+	private ActionListener actionListenerbtnRegistroEnRegistro;
 
 	Controlador(VistaInicio Inici, Model Model) {
 		this.Inici = Inici;
@@ -26,6 +27,7 @@ public class Controlador {
 		
 			public void actionPerformed(ActionEvent e) {
 				IniciSesio.setVisible(true);
+				Inici.setVisible(false);
 			}
 		};
 		Inici.getbtnIniciDeSesio().addActionListener(actionListenerbtnIniciDeSesio);
@@ -33,6 +35,7 @@ public class Controlador {
 		actionListenerbtnRegistrarse = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Registro.setVisible(true);
+				Inici.setVisible(false);
 			}
 		};
 		Inici.getBtnRegistrarse().addActionListener(actionListenerbtnRegistrarse);
@@ -41,12 +44,8 @@ public class Controlador {
 			public void actionPerformed(ActionEvent e) {
 				String nom = IniciSesio.getTextFieldNom().getText();
 				String contrasenya = IniciSesio.getTextFieldContrasenya().getText();
-				String contrasenyaRepetida = IniciSesio.getTextFieldContrasenyaRepetida().getText();
-				if (nom.isEmpty() || contrasenya.isEmpty() || contrasenyaRepetida.isEmpty()) {
+				if (nom.isEmpty() || contrasenya.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}else if(!contrasenya.equals(contrasenyaRepetida)){
-					JOptionPane.showMessageDialog(null, "Les contrasenyes no son el mateix.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}else if(Model.iniciUsuari(nom, contrasenya)){
 					JOptionPane.showMessageDialog(null, "Usuari i contrasenya correctes");
@@ -58,6 +57,28 @@ public class Controlador {
 			}
 		};
 		IniciSesio.getbtnIniciDeSesioEnincideSesion().addActionListener(actionListenerbtnIniciDeSesioEnincideSesion);
+		
+		actionListenerbtnRegistroEnRegistro = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nom = Registro.getTextFieldNomRegistro().getText();
+				String contrasenya = Registro.getTextFieldContrasenyaRegistro().getText();
+				String contrasenyaRepetida = Registro.getTextFieldContrasenyaRepetidaRegistro().getText();
+				if (nom.isEmpty() || contrasenya.isEmpty() || contrasenyaRepetida.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}else if(!contrasenya.equals(contrasenyaRepetida)){
+					JOptionPane.showMessageDialog(null, "La contrasenya no es igual.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}else if(Model.insertUsuari(nom, contrasenya)){
+					JOptionPane.showMessageDialog(null, "Usuari fet");
+					IniciSesio.setVisible(true);
+					Registro.setVisible(false);
+				}else {
+					JOptionPane.showMessageDialog(null, "Usuari ya creat");
+				}
+			}
+		};
+		Registro.getBtnRegistroEnRegistro().addActionListener(actionListenerbtnRegistroEnRegistro);
 	}
 }
 //Ejemplo controlador de otra evaluable:

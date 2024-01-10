@@ -96,4 +96,17 @@ public class VistaRegistro extends JFrame {
 		return btnRegistroEnRegistro;
 	}
 
+	public JTextField getTextFieldNomRegistro() {
+		return textFieldNomRegistro;
+	}
+
+	public JTextField getTextFieldContrasenyaRegistro() {
+		return textFieldContrasenyaRegistro;
+	}
+
+	public JTextField getTextFieldContrasenyaRepetidaRegistro() {
+		return textFieldContrasenyaRepetidaRegistro;
+	}
+	
+	
 }
