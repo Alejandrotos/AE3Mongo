@@ -10,6 +10,8 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class VistaPrincipal extends JFrame {
 
@@ -185,6 +187,14 @@ public class VistaPrincipal extends JFrame {
 		btnImgr_4_4.setBackground(Color.DARK_GRAY);
 		btnImgr_4_4.setBounds(777, 399, 157, 110);
 		contentPane.add(btnImgr_4_4);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(50, 339, 157, 170);
+		contentPane.add(scrollPane);
+		
+		JTextArea textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
+		textArea.setLineWrap(true);
 		
 		setVisible(true);
 	}
