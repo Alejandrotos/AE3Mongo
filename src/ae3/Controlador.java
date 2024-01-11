@@ -26,6 +26,7 @@ public class Controlador {
 	// Aqui irían ActionsListeners de VistaInicioSesion
 	// Aqui irían ActionsListeners de VistaInicioSesion
 	private ActionListener actionListenerbtnJugar;
+	private ActionListener actionListenerBotonsPropiJoc;
 
 	Controlador(VistaInicio Inici, Model Model) {
 		this.Inici = Inici;
@@ -40,49 +41,107 @@ public class Controlador {
 			}
 		};
 		Inici.getbtnIniciDeSesio().addActionListener(actionListenerbtnIniciDeSesio);
-
+		
+		actionListenerBotonsPropiJoc = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+		
+				
+			}
+		};
 		// Funcionalidades de VistaPrincipal
 		actionListenerbtnJugar = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JButton[] botonsImatges = VistaPrincipal.getButtonsImatgesArray();
-				ArrayList<String> rutasDeImages = Model.getRutaDeImages();
+			JButton[] botonsImatges = VistaPrincipal.getButtonsImatgesArray();
+			private ArrayList<String> rutasDeImages = Model.getRutaDeImages();
+			private int cantidadBotones;
+			private JButton primerBotonClicado;
+			private JButton segundoBotonClicado;
 
+			public void actionPerformed(ActionEvent e) {
 				File carpetaImg = new File("img");
 				String[] archivos = carpetaImg.list();
 
 				// if (!carpetaImg.exists() || archivos == null || archivos.length == 0)
 				Model.extraureImatges();
 
-				// Modo de juego 4x2
-				if (vistaPrincipal.getRdbtn4x2().isSelected()) {
-					/*
-					 * for (int i = 0; i < 8; i++) { botonsImatges[i].setEnabled(true);
-					 * botonsImatges[i].setBackground(Color.WHITE); // ImageIcon icon = new
-					 * ImageIcon(rutasDeImages.get(i)); // botonsImatges[i].setIcon(icon);
-					 * 
-					 * }
-					 */
-					asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 8);
-					return;
-
-				}
-				// Modo de juego 4x4
-
-				/*
-				 * for (int i = 0; i < botonsImatges.length; i++) {
-				 * botonsImatges[i].setEnabled(true);
-				 * botonsImatges[i].setBackground(Color.WHITE);
-				 * 
-				 * }
-				 */
-				asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 16);
-				return;
-
+				Boolean modo4x2 = vistaPrincipal.getRdbtn4x2().isSelected();
+				cantidadBotones = modo4x2 ? 8 : 16;
+				
+				asignarIconosAleatoriosABotones();
+				
+				 // Asignar ActionListener a los botones
+		        for (JButton boton : botonsImatges) {
+		            boton.addActionListener();
+		        }
 			}
 		};
 		vistaPrincipal.getBtnJugar().addActionListener(actionListenerbtnJugar);
 	}
 
+	private class BotonListener implements ActionListener {
+	    @Override
+	    public void actionPerformed(ActionEvent e) {
+	        JButton botonClicado = (JButton) e.getSource();
+
+	        // Verificar si el botón ya ha sido emparejado
+	        if ((boolean) botonClicado.getClientProperty("iconoMostrado")) {
+	            return;
+	        }
+
+	        if (primerBotonClicado == null) {
+	            // Primer clic
+	            primerBotonClicado = botonClicado;
+	            mostrarIcono(primerBotonClicado);
+	        } else {
+	            // Segundo clic
+	            segundoBotonClicado = botonClicado;
+	            mostrarIcono(segundoBotonClicado);
+
+	            // Verificar si los iconos coinciden
+	            if (sonIconosIguales(primerBotonClicado, segundoBotonClicado)) {
+	                // Dejar los iconos permanentemente
+	                primerBotonClicado.putClientProperty("iconoMostrado", true);
+	                segundoBotonClicado.putClientProperty("iconoMostrado", true);
+
+	                // Desactivar los botones emparejados
+	                primerBotonClicado.setEnabled(false);
+	                segundoBotonClicado.setEnabled(false);
+	            } else {
+	                // Ocultar los iconos después de un breve período
+	                Timer timer = new Timer(1000, new ActionListener() {
+	                    @Override
+	                    public void actionPerformed(ActionEvent e) {
+	                        ocultarIcono(primerBotonClicado);
+	                        ocultarIcono(segundoBotonClicado);
+	                    }
+	                });
+	                timer.setRepeats(false);
+	                timer.start();
+	            }
+
+	            // Reiniciar variables para el siguiente par de clics
+	            primerBotonClicado = null;
+	            segundoBotonClicado = null;
+	        }
+	    }
+
+	}
+	private void mostrarIcono(JButton boton) {
+        String rutaImagen = (String) boton.getClientProperty("rutaImagen");
+        ImageIcon icon = new ImageIcon(rutaImagen);
+        boton.setIcon(icon);
+    }
+
+    private void ocultarIcono(JButton boton) {
+        boton.setIcon(null);
+    }
+
+    private boolean sonIconosIguales(JButton boton1, JButton boton2) {
+        String ruta1 = (String) boton1.getClientProperty("rutaImagen");
+        String ruta2 = (String) boton2.getClientProperty("rutaImagen");
+        return ruta1.equals(ruta2);
+    }
+	
 	private void asignarIconosAleatoriosABotones(JButton[] botones, ArrayList<String> rutasDeImagenes,
 			int cantidadBotones) {
 		if (rutasDeImagenes.size() < cantidadBotones / 2) {
@@ -112,6 +171,12 @@ public class Controlador {
 			botones[indiceBoton].setBackground(Color.WHITE);
 			botones[indiceBoton].setIcon(icon);
 		}
+	}
+
+	private ArrayList<String> obtenerRutasAleatorias(ArrayList<String> rutasDeImages) {
+		ArrayList<String> rutasAleatorias = new ArrayList<>(rutasDeImages);
+		Collections.shuffle(rutasAleatorias);
+		return rutasAleatorias;
 	}
 
 }
