@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
@@ -58,10 +59,11 @@ public class Controlador {
 					for (int i = 0; i < 8; i++) {
 						botonsImatges[i].setEnabled(true);
 						botonsImatges[i].setBackground(Color.WHITE);
-						ImageIcon icon = new ImageIcon(rutasDeImages.get(i));
-						botonsImatges[i].setIcon(icon);
+						// ImageIcon icon = new ImageIcon(rutasDeImages.get(i));
+						// botonsImatges[i].setIcon(icon);
 
 					}
+					asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 4);
 					return;
 
 				}
@@ -72,12 +74,37 @@ public class Controlador {
 					botonsImatges[i].setBackground(Color.WHITE);
 
 				}
+				asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 8);
 				return;
 
 			}
 		};
 		vistaPrincipal.getBtnJugar().addActionListener(actionListenerbtnJugar);
 	}
+
+	private void asignarIconosAleatoriosABotones(JButton[] botones, ArrayList<String> rutasDeImagenes,
+			int cantidadBotones) {
+		if (rutasDeImagenes.size() < cantidadBotones) {
+			System.out.println("No hay suficientes imágenes para el número de botones.");
+			return;
+		}
+
+		ArrayList<Integer> indicesImagenes = new ArrayList<>();
+		for (int i = 0; i < rutasDeImagenes.size(); i++) {
+			indicesImagenes.add(i);
+		}
+		Collections.shuffle(indicesImagenes);
+
+		for (int i = 0; i < cantidadBotones; i++) {
+			int indiceImagen = indicesImagenes.get(i / 2);
+			String rutaImagen = rutasDeImagenes.get(indiceImagen);
+			ImageIcon icon = new ImageIcon(rutaImagen);
+			botones[i].setEnabled(true);
+			botones[i].setBackground(Color.WHITE);
+			botones[i].setIcon(icon);
+		}
+	}
+
 }
 //Ejemplo controlador de otra evaluable:
 
