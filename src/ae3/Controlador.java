@@ -104,8 +104,9 @@ public class Controlador {
 		actionListenerbtnSaloDeLa = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				Inici.setVisible(true);
-				IniciSesio.setVisible(false);
+				String nom = IniciSesio.getTextFieldNom().getText();
+				Model.insertRecord(nom, Principal.rdbtnDificultad());
+				Principal.setTextAreaFama(Model.insertRecordEnJTextArea(nom, Principal.rdbtnDificultad()));
 			}
 		};
 		Principal.getBtnSaloDeLa().addActionListener(actionListenerbtnSaloDeLa);

@@ -21,6 +21,9 @@ public class VistaPrincipal extends JFrame {
 	private JButton btnGuardar;
 	private JButton btnSaloDeLa;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextArea textAreaFama;
+	private static JRadioButton rdbtn4x2;
+	private static JRadioButton rdbtn4x4;
 
 	/**
 	 * Create the frame.
@@ -56,7 +59,7 @@ public class VistaPrincipal extends JFrame {
 		btnSaloDeLa.setBounds(50, 289, 157, 25);
 		contentPane.add(btnSaloDeLa);
 		
-		JRadioButton rdbtn4x4 = new JRadioButton("4x4");
+		rdbtn4x4 = new JRadioButton("4x4");
 		rdbtn4x4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		rdbtn4x4.setForeground(Color.WHITE);
 		rdbtn4x4.setBackground(Color.DARK_GRAY);
@@ -64,7 +67,7 @@ public class VistaPrincipal extends JFrame {
 		rdbtn4x4.setBounds(50, 114, 64, 23);
 		contentPane.add(rdbtn4x4);
 		
-		JRadioButton rdbtn4x2 = new JRadioButton("4x2");
+		rdbtn4x2 = new JRadioButton("4x2");
 		rdbtn4x2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		rdbtn4x2.setForeground(Color.WHITE);
 		rdbtn4x2.setBackground(Color.DARK_GRAY);
@@ -192,9 +195,10 @@ public class VistaPrincipal extends JFrame {
 		scrollPane.setBounds(50, 359, 157, 170);
 		contentPane.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-		textArea.setLineWrap(true);
+		textAreaFama = new JTextArea();
+		textAreaFama.setEditable(false);
+		scrollPane.setViewportView(textAreaFama);
+		textAreaFama.setLineWrap(true);
 		
 		JRadioButton rdbtn4x2Fama = new JRadioButton("4x2");
 		rdbtn4x2Fama.setForeground(Color.WHITE);
@@ -224,4 +228,32 @@ public class VistaPrincipal extends JFrame {
 	public JButton getBtnSaloDeLa() {
 		return btnSaloDeLa;
 	}
+
+	public JTextArea getTextAreaFama() {
+		return textAreaFama;
+	}
+
+	public void setTextAreaFama(String textAreaFama) {
+		//this.textAreaFama = textAreaFama;
+	}
+	
+	
+	
+	public JRadioButton getRdbtn4x2() {
+		return rdbtn4x2;
+	}
+
+	public JRadioButton getRdbtn4x4() {
+		return rdbtn4x4;
+	}
+
+	public static int rdbtnDificultad() {
+		if(rdbtn4x2.isSelected()) {
+			return 4;
+		}else {
+			return 8;
+		}
+	}
+	
+	
 }

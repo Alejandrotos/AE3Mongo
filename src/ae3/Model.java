@@ -65,6 +65,11 @@ public class Model {
 
 		collecioRecords.insertOne(record);
 	}
+	
+	public static String insertRecordEnJTextArea(String usuari, int dificultat) {
+		String recordEnJtextPane = usuari + dificultat + generateTimestamp() + duracioTotal;
+		return recordEnJtextPane;
+	}
 
 	public static boolean insertUsuari(String userString, String pass) {
 		conexioDBMongo();
