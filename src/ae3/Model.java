@@ -1,7 +1,9 @@
 package ae3;
 
+import org.apache.commons.codec.binary.Base64;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.json.JSONObject;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
@@ -12,6 +14,11 @@ import com.mongodb.client.model.Filters;
 
 import static com.mongodb.client.model.Filters.*;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -21,9 +28,10 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.TimeZone;
 
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class Model {
@@ -32,30 +40,38 @@ public class Model {
 	private static MongoCollection<Document> collecioRecords;
 	private static MongoCollection<Document> collecioImatges;
 	private static MongoCollection<Document> collecioUsuaris;
+	private static ArrayList<String> rutasDeImages = new ArrayList<>();
 	private static Instant iniciPartida;
 	private static long duracioTotal;
 	private static String timestamp;
 
+	public Instant getIniciPartida() {
+		return iniciPartida;
+	}
+
+	public ArrayList<String> getRutaDeImages() {
+		return rutasDeImages;
+	}
+
 	public static void conexioDBMongo() {
 		try {
-
-			String jsonConfig = new String(Files.readAllBytes(Paths.get("conexio.json")));
-
-			Document configDoc = Document.parse(jsonConfig);
-
+			
+			String jsonString = new String(Files.readAllBytes(Paths.get("conexion.json")));
+		
+			JSONObject configDoc = new JSONObject(jsonString);
 			String ip = configDoc.getString("ip");
-			int port = configDoc.getInteger("port");
+			int port = configDoc.getInt("port");
+			
 			String databaseName = configDoc.getString("database");
-
+			
 			mongoClient = MongoClients.create(String.format("mongodb://%s:%d", ip, port));
 			database = mongoClient.getDatabase(databaseName);
-
+			
 			collecioRecords = database.getCollection("records");
 			collecioImatges = database.getCollection("img");
 			collecioUsuaris = database.getCollection("usuarios");
-
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -88,42 +104,44 @@ public class Model {
 		duracioTotal = Duration.between(iniciPartida, Instant.now()).getSeconds();
 	}
 
-	public Instant getIniciPartida() {
-		return iniciPartida;
+	public void extraureImatges() {
+		try {
+			ArrayList<JSONObject> objImatges = selectImatgesJSon();
+
+			File carpetaImg = new File("img");
+			if (!carpetaImg.exists()) {
+				carpetaImg.mkdir();
+			}
+
+			for (int i = 0; i < objImatges.size(); i++) {
+				String string64 = objImatges.get(i).getString("base64");
+				String id = objImatges.get(i).getString("id");
+				String rutaFile = "img/" + id;
+				rutasDeImages.add(rutaFile);
+
+				byte[] btDataFile = Base64.decodeBase64(string64);
+
+				BufferedImage imatge = ImageIO.read(new ByteArrayInputStream(btDataFile));
+				Image imatgeEscalada = imatge.getScaledInstance(-1, 400, Image.SCALE_SMOOTH);
+
+				File imatgeFile = new File(rutaFile);
+				ImageIO.write(imatge, "jpg", imatgeFile);
+			}
+		} catch (IOException e) {
+			System.err.println(e);
+		}
+
 	}
 
-	public void extraureImatge(String string64) throws IOException {
-		byte[] btDataFile = Base64.decodeBase64(string64);
-
-		// Lee la imagen desde bytes
-		BufferedImage imatge = ImageIO.read(new ByteArrayInputStream(btDataFile));
-
-		// Escala la imagen
-		Image scaledImage = imatge.getScaledInstance(-1, 400, Image.SCALE_SMOOTH);
-
-		// Convierte la imagen a BufferedImage
-		BufferedImage bufferedImage = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null),
-				BufferedImage.TYPE_INT_RGB);
-
-		// Dibuja la imagen en el BufferedImage
-		Graphics g = bufferedImage.createGraphics();
-		g.drawImage(scaledImage, 0, 0, null);
-		g.dispose();
-
-		// Guarda la imagen en un archivo (opcional)
-		ImageIO.write(bufferedImage, "jpg", new File("imatge.jpg"));
-	}
-
-	private void selectImatgeB64() throws IOException {
+	private ArrayList<JSONObject> selectImatgesJSon() throws IOException {
+		ArrayList<JSONObject> llistaImatgesJson = new ArrayList<JSONObject>();
 		MongoCursor<Document> cursor = collecioImatges.find().iterator();
 
 		while (cursor.hasNext()) {
-			Document document = cursor.next();
-			String base64String = document.getString("base64");
-			extraureImatge(base64String);
+			JSONObject obj = new JSONObject(cursor.next().toJson());
+			llistaImatgesJson.add(obj);
 		}
-
-		cursor.close();
+		return llistaImatgesJson;
 	}
 
 	private static String generateTimestamp() {

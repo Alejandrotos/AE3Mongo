@@ -1,10 +1,14 @@
 package ae3;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.synth.Region;
@@ -40,12 +44,22 @@ public class Controlador {
 		actionListenerbtnJugar = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JButton[] botonsImatges = VistaPrincipal.getButtonsImatgesArray();
+				ArrayList<String> rutasDeImages = Model.getRutaDeImages();
+
+				File carpetaImg = new File("img");
+				String[] archivos = carpetaImg.list();
+
+				if (!carpetaImg.exists() || archivos == null || archivos.length == 0) {
+					Model.extraureImatges();
+				}
 
 				// Modo de juego 4x2
 				if (vistaPrincipal.getRdbtn4x2().isSelected()) {
 					for (int i = 0; i < 8; i++) {
 						botonsImatges[i].setEnabled(true);
 						botonsImatges[i].setBackground(Color.WHITE);
+						ImageIcon icon = new ImageIcon(rutasDeImages.get(i));
+						botonsImatges[i].setIcon(icon);
 
 					}
 					return;

@@ -50,6 +50,10 @@ public class VistaPrincipal extends JFrame {
 	public JButton getBtnSalDeLa() {
 		return btnSalDeLa;
 	}
+	
+	public static JButton[] getButtonsImatgesArray() {
+		return buttonsImatgesArray;
+	}
 
 	/**
 	 * Create the frame.
@@ -231,10 +235,6 @@ public class VistaPrincipal extends JFrame {
 		contentPane.add(buttonsImatgesArray[15]);
 
 		setVisible(true);
-	}
-
-	public static JButton[] getButtonsImatgesArray() {
-		return buttonsImatgesArray;
 	}
 
 }
