@@ -50,31 +50,32 @@ public class Controlador {
 				File carpetaImg = new File("img");
 				String[] archivos = carpetaImg.list();
 
-				if (!carpetaImg.exists() || archivos == null || archivos.length == 0) {
-					Model.extraureImatges();
-				}
+				// if (!carpetaImg.exists() || archivos == null || archivos.length == 0)
+				Model.extraureImatges();
 
 				// Modo de juego 4x2
 				if (vistaPrincipal.getRdbtn4x2().isSelected()) {
-					for (int i = 0; i < 8; i++) {
-						botonsImatges[i].setEnabled(true);
-						botonsImatges[i].setBackground(Color.WHITE);
-						// ImageIcon icon = new ImageIcon(rutasDeImages.get(i));
-						// botonsImatges[i].setIcon(icon);
-
-					}
-					asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 4);
+					/*
+					 * for (int i = 0; i < 8; i++) { botonsImatges[i].setEnabled(true);
+					 * botonsImatges[i].setBackground(Color.WHITE); // ImageIcon icon = new
+					 * ImageIcon(rutasDeImages.get(i)); // botonsImatges[i].setIcon(icon);
+					 * 
+					 * }
+					 */
+					asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 8);
 					return;
 
 				}
 				// Modo de juego 4x4
 
-				for (int i = 0; i < botonsImatges.length; i++) {
-					botonsImatges[i].setEnabled(true);
-					botonsImatges[i].setBackground(Color.WHITE);
-
-				}
-				asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 8);
+				/*
+				 * for (int i = 0; i < botonsImatges.length; i++) {
+				 * botonsImatges[i].setEnabled(true);
+				 * botonsImatges[i].setBackground(Color.WHITE);
+				 * 
+				 * }
+				 */
+				asignarIconosAleatoriosABotones(botonsImatges, rutasDeImages, 16);
 				return;
 
 			}
@@ -84,7 +85,7 @@ public class Controlador {
 
 	private void asignarIconosAleatoriosABotones(JButton[] botones, ArrayList<String> rutasDeImagenes,
 			int cantidadBotones) {
-		if (rutasDeImagenes.size() < cantidadBotones) {
+		if (rutasDeImagenes.size() < cantidadBotones / 2) {
 			System.out.println("No hay suficientes imágenes para el número de botones.");
 			return;
 		}
@@ -95,13 +96,21 @@ public class Controlador {
 		}
 		Collections.shuffle(indicesImagenes);
 
+		ArrayList<Integer> indicesBotones = new ArrayList<>();
+		for (int i = 0; i < cantidadBotones; i++) {
+			indicesBotones.add(i);
+		}
+		Collections.shuffle(indicesBotones);
+
 		for (int i = 0; i < cantidadBotones; i++) {
 			int indiceImagen = indicesImagenes.get(i / 2);
 			String rutaImagen = rutasDeImagenes.get(indiceImagen);
 			ImageIcon icon = new ImageIcon(rutaImagen);
-			botones[i].setEnabled(true);
-			botones[i].setBackground(Color.WHITE);
-			botones[i].setIcon(icon);
+
+			int indiceBoton = indicesBotones.get(i);
+			botones[indiceBoton].setEnabled(true);
+			botones[indiceBoton].setBackground(Color.WHITE);
+			botones[indiceBoton].setIcon(icon);
 		}
 	}
 
