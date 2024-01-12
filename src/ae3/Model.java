@@ -37,6 +37,9 @@ public class Model {
 	private static long duracioTotal;
 	private static String timestamp;
 
+	/**
+	 * 
+	 */
 	public static void conexioDBMongo() {
 		try {
 			// Leer el contenido del archivo JSON

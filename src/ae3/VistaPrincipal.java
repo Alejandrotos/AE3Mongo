@@ -56,7 +56,7 @@ public class VistaPrincipal extends JFrame {
 		btnSaloDeLa.setForeground(Color.DARK_GRAY);
 		btnSaloDeLa.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnSaloDeLa.setBackground(Color.DARK_GRAY);
-		btnSaloDeLa.setBounds(50, 289, 157, 25);
+		btnSaloDeLa.setBounds(50, 290, 157, 25);
 		contentPane.add(btnSaloDeLa);
 		
 		rdbtn4x4 = new JRadioButton("4x4");
@@ -192,27 +192,13 @@ public class VistaPrincipal extends JFrame {
 		contentPane.add(btnImgr_4_4);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(50, 359, 157, 170);
+		scrollPane.setBounds(50, 326, 157, 203);
 		contentPane.add(scrollPane);
 		
 		textAreaFama = new JTextArea();
-		textAreaFama.setEditable(false);
 		scrollPane.setViewportView(textAreaFama);
+		textAreaFama.setEditable(false);
 		textAreaFama.setLineWrap(true);
-		
-		JRadioButton rdbtn4x2Fama = new JRadioButton("4x2");
-		rdbtn4x2Fama.setForeground(Color.WHITE);
-		rdbtn4x2Fama.setFont(new Font("Tahoma", Font.BOLD, 14));
-		rdbtn4x2Fama.setBackground(Color.DARK_GRAY);
-		rdbtn4x2Fama.setBounds(143, 322, 64, 23);
-		contentPane.add(rdbtn4x2Fama);
-		
-		JRadioButton rdbtn4x4Fama = new JRadioButton("4x4");
-		rdbtn4x4Fama.setForeground(Color.WHITE);
-		rdbtn4x4Fama.setFont(new Font("Tahoma", Font.BOLD, 14));
-		rdbtn4x4Fama.setBackground(Color.DARK_GRAY);
-		rdbtn4x4Fama.setBounds(50, 322, 64, 23);
-		contentPane.add(rdbtn4x4Fama);
 		
 		setVisible(false);
 	}
@@ -249,9 +235,9 @@ public class VistaPrincipal extends JFrame {
 
 	public static int rdbtnDificultad() {
 		if(rdbtn4x2.isSelected()) {
-			return 4;
-		}else {
 			return 8;
+		}else {
+			return 16;
 		}
 	}
 	
