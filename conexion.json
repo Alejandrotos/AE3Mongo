@@ -1,6 +1,6 @@
 {
 "ip": "localhost",
-"port": 27017",
+"port": "27017",
 "database": "memory",
 "collection_records": "records",
 "collection_users": "usuarios",

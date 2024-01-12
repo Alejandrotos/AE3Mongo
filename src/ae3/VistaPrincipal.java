@@ -7,8 +7,10 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class VistaPrincipal extends JFrame {
@@ -17,8 +19,52 @@ public class VistaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private JButton btnJugar;
 	private JButton btnGuardar;
-	private JButton btnSalDeLa;
+	private JButton btnSaloDeLaFama;
+	private JRadioButton rdbtn4x4;
+	private JRadioButton rdbtn4x2;
+	private static ArrayList<JButton> buttonsImatgesArray = new ArrayList<>();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextArea textAreaFama;
+
+	public JRadioButton getRdbtn4x4() {
+		return rdbtn4x4;
+	}
+
+	public void setRdbtn4x4(JRadioButton rdbtn4x4) {
+		this.rdbtn4x4 = rdbtn4x4;
+	}
+
+	public JRadioButton getRdbtn4x2() {
+		return rdbtn4x2;
+	}
+
+	public void setRdbtn4x2(JRadioButton rdbtn4x2) {
+		this.rdbtn4x2 = rdbtn4x2;
+	}
+
+	public JButton getBtnJugar() {
+		return btnJugar;
+	}
+
+	public JButton getBtnGuardar() {
+		return btnGuardar;
+	}
+
+	public JButton getbtnSaloDeLaFama() {
+		return btnSaloDeLaFama;
+	}
+
+	public JTextArea getTextAreaFama() {
+		return textAreaFama;
+	}
+
+	public void setTextAreaFama(String textAreaFama) {
+		this.textAreaFama.setText(textAreaFama);
+	}
+
+	public static ArrayList<JButton> getButtonsImatgesArray() {
+		return buttonsImatgesArray;
+	}
 
 	/**
 	 * Create the frame.
@@ -32,172 +78,62 @@ public class VistaPrincipal extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		btnJugar = new JButton("Jugar");
 		btnJugar.setBounds(50, 82, 157, 25);
-		btnJugar.setForeground(Color.WHITE);
+		btnJugar.setForeground(new Color(255, 255, 255));
 		btnJugar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnJugar.setBackground(Color.DARK_GRAY);
 		contentPane.add(btnJugar);
-		
+
 		btnGuardar = new JButton("Guardar");
-		btnGuardar.setForeground(Color.WHITE);
+		btnGuardar.setForeground(new Color(255, 255, 255));
 		btnGuardar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnGuardar.setBackground(Color.DARK_GRAY);
 		btnGuardar.setBounds(50, 185, 157, 25);
 		contentPane.add(btnGuardar);
-		
-		btnSalDeLa = new JButton("Saló de la fama");
-		btnSalDeLa.setForeground(Color.WHITE);
-		btnSalDeLa.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSalDeLa.setBackground(Color.DARK_GRAY);
-		btnSalDeLa.setBounds(50, 289, 157, 25);
-		contentPane.add(btnSalDeLa);
-		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("4x4");
-		rdbtnNewRadioButton.setFont(new Font("Tahoma", Font.BOLD, 14));
-		rdbtnNewRadioButton.setForeground(Color.WHITE);
-		rdbtnNewRadioButton.setBackground(Color.DARK_GRAY);
-		buttonGroup.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setBounds(50, 114, 64, 23);
-		contentPane.add(rdbtnNewRadioButton);
-		
-		JRadioButton rdbtn4x2 = new JRadioButton("4x2");
+
+		btnSaloDeLaFama = new JButton("Saló de la fama");
+		btnSaloDeLaFama.setForeground(new Color(255, 255, 255));
+		btnSaloDeLaFama.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSaloDeLaFama.setBackground(Color.DARK_GRAY);
+		btnSaloDeLaFama.setBounds(50, 289, 157, 25);
+		contentPane.add(btnSaloDeLaFama);
+
+		rdbtn4x4 = new JRadioButton("4x4");
+		rdbtn4x4.setSelected(true);
+		rdbtn4x4.setFont(new Font("Tahoma", Font.BOLD, 14));
+		rdbtn4x4.setForeground(Color.WHITE);
+		rdbtn4x4.setBackground(Color.DARK_GRAY);
+		buttonGroup.add(rdbtn4x4);
+		rdbtn4x4.setBounds(50, 114, 64, 23);
+		contentPane.add(rdbtn4x4);
+
+		rdbtn4x2 = new JRadioButton("4x2");
 		rdbtn4x2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		rdbtn4x2.setForeground(Color.WHITE);
 		rdbtn4x2.setBackground(Color.DARK_GRAY);
 		buttonGroup.add(rdbtn4x2);
 		rdbtn4x2.setBounds(143, 114, 64, 23);
 		contentPane.add(rdbtn4x2);
-		
-		JButton btnImgr_1_1 = new JButton("");
-		btnImgr_1_1.setForeground(Color.WHITE);
-		btnImgr_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_1_1.setBackground(Color.DARK_GRAY);
-		btnImgr_1_1.setBounds(278, 36, 157, 110);
-		contentPane.add(btnImgr_1_1);
-		
-		JButton btnImgr_1_2 = new JButton("");
-		btnImgr_1_2.setForeground(Color.WHITE);
-		btnImgr_1_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_1_2.setBackground(Color.DARK_GRAY);
-		btnImgr_1_2.setBounds(445, 36, 157, 110);
-		contentPane.add(btnImgr_1_2);
-		
-		JButton btnImgr_1_3 = new JButton("");
-		btnImgr_1_3.setForeground(Color.WHITE);
-		btnImgr_1_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_1_3.setBackground(Color.DARK_GRAY);
-		btnImgr_1_3.setBounds(612, 36, 157, 110);
-		contentPane.add(btnImgr_1_3);
-		
-		JButton btnImgr_1_4 = new JButton("");
-		btnImgr_1_4.setForeground(Color.WHITE);
-		btnImgr_1_4.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_1_4.setBackground(Color.DARK_GRAY);
-		btnImgr_1_4.setBounds(777, 36, 157, 110);
-		contentPane.add(btnImgr_1_4);
-		
-		JButton btnImgr_2_1 = new JButton("");
-		btnImgr_2_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnImgr_2_1.setForeground(Color.WHITE);
-		btnImgr_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_2_1.setBackground(Color.DARK_GRAY);
-		btnImgr_2_1.setBounds(278, 157, 157, 110);
-		contentPane.add(btnImgr_2_1);
-		
-		JButton btnImgr_2_2 = new JButton("");
-		btnImgr_2_2.setForeground(Color.WHITE);
-		btnImgr_2_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_2_2.setBackground(Color.DARK_GRAY);
-		btnImgr_2_2.setBounds(445, 157, 157, 110);
-		contentPane.add(btnImgr_2_2);
-		
-		JButton btnImgr_2_3 = new JButton("");
-		btnImgr_2_3.setForeground(Color.WHITE);
-		btnImgr_2_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_2_3.setBackground(Color.DARK_GRAY);
-		btnImgr_2_3.setBounds(612, 157, 157, 110);
-		contentPane.add(btnImgr_2_3);
-		
-		JButton btnImgr_2_4 = new JButton("");
-		btnImgr_2_4.setForeground(Color.WHITE);
-		btnImgr_2_4.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_2_4.setBackground(Color.DARK_GRAY);
-		btnImgr_2_4.setBounds(777, 157, 157, 110);
-		contentPane.add(btnImgr_2_4);
-		
-		JButton btnImgr_3_1 = new JButton("");
-		btnImgr_3_1.setForeground(Color.WHITE);
-		btnImgr_3_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_3_1.setBackground(Color.DARK_GRAY);
-		btnImgr_3_1.setBounds(278, 278, 157, 110);
-		contentPane.add(btnImgr_3_1);
-		
-		JButton btnImgr_3_2 = new JButton("");
-		btnImgr_3_2.setForeground(Color.WHITE);
-		btnImgr_3_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_3_2.setBackground(Color.DARK_GRAY);
-		btnImgr_3_2.setBounds(445, 278, 157, 110);
-		contentPane.add(btnImgr_3_2);
-		
-		JButton btnImgr_3_3 = new JButton("");
-		btnImgr_3_3.setForeground(Color.WHITE);
-		btnImgr_3_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_3_3.setBackground(Color.DARK_GRAY);
-		btnImgr_3_3.setBounds(612, 278, 157, 110);
-		contentPane.add(btnImgr_3_3);
-		
-		JButton btnImgr_3_4 = new JButton("");
-		btnImgr_3_4.setForeground(Color.WHITE);
-		btnImgr_3_4.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_3_4.setBackground(Color.DARK_GRAY);
-		btnImgr_3_4.setBounds(777, 278, 157, 110);
-		contentPane.add(btnImgr_3_4);
-		
-		JButton btnImgr_4_1 = new JButton("");
-		btnImgr_4_1.setForeground(Color.WHITE);
-		btnImgr_4_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_4_1.setBackground(Color.DARK_GRAY);
-		btnImgr_4_1.setBounds(278, 399, 157, 110);
-		contentPane.add(btnImgr_4_1);
-		
-		JButton btnImgr_4_2 = new JButton("");
-		btnImgr_4_2.setForeground(Color.WHITE);
-		btnImgr_4_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_4_2.setBackground(Color.DARK_GRAY);
-		btnImgr_4_2.setBounds(445, 399, 157, 110);
-		contentPane.add(btnImgr_4_2);
-		
-		JButton btnImgr_4_3 = new JButton("");
-		btnImgr_4_3.setForeground(Color.WHITE);
-		btnImgr_4_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_4_3.setBackground(Color.DARK_GRAY);
-		btnImgr_4_3.setBounds(612, 399, 157, 110);
-		contentPane.add(btnImgr_4_3);
-		
-		JButton btnImgr_4_4 = new JButton("");
-		btnImgr_4_4.setForeground(Color.WHITE);
-		btnImgr_4_4.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnImgr_4_4.setBackground(Color.DARK_GRAY);
-		btnImgr_4_4.setBounds(777, 399, 157, 110);
-		contentPane.add(btnImgr_4_4);
-		
-		setVisible(true);
+
+		for (int i = 0; i < 16; i++) {
+			JButton boton = new JButton("");
+			boton.setEnabled(false);
+			boton.setForeground(Color.WHITE);
+			boton.setFont(new Font("Tahoma", Font.BOLD, 14));
+			boton.setBackground(Color.DARK_GRAY);
+
+			int x = (i % 4) * 167 + 278;
+			int y = (i / 4) * 121 + 36;
+
+			boton.setBounds(x, y, 157, 110);
+
+			contentPane.add(boton);
+			buttonsImatgesArray.add(boton);
+		}
+
+		setVisible(false);
 	}
 
-	public JButton getBtnJugar() {
-		return btnJugar;
-	}
-
-	public JButton getBtnGuardar() {
-		return btnGuardar;
-	}
-
-	public JButton getBtnSalDeLa() {
-		return btnSalDeLa;
-	}
 }
