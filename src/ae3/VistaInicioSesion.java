@@ -1,6 +1,5 @@
 package ae3;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -17,9 +16,8 @@ public class VistaInicioSesion extends JFrame {
 	private JPanel contentPane;
 	private JTextField textFieldNom;
 	private JTextField textFieldContrasenya;
-	private JTextField textFieldContrasenyaRepetida;
 	private JButton btnIniciDeSesioEnincideSesion;
-
+	private JButton btnTornarIniciSessio;
 
 	/**
 	 * Create the frame.
@@ -33,64 +31,71 @@ public class VistaInicioSesion extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(70, 30, 308, 261);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JLabel lblNom = new JLabel("Nom:");
 		lblNom.setForeground(Color.DARK_GRAY);
 		lblNom.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNom.setBounds(27, 65, 46, 14);
 		panel.add(lblNom);
-		
+
 		JLabel lblIniciDeSessi = new JLabel("Inici de sessió");
-		lblIniciDeSessi.setBounds(89, 11, 127, 22);
+		lblIniciDeSessi.setBounds(106, 11, 127, 22);
 		panel.add(lblIniciDeSessi);
 		lblIniciDeSessi.setForeground(Color.DARK_GRAY);
 		lblIniciDeSessi.setFont(new Font("Tahoma", Font.BOLD, 18));
-		
+
 		textFieldNom = new JTextField();
 		textFieldNom.setBounds(27, 90, 181, 20);
 		panel.add(textFieldNom);
 		textFieldNom.setColumns(10);
-		
+
 		JLabel lblContrasenya = new JLabel("Contrasenya:");
 		lblContrasenya.setForeground(Color.DARK_GRAY);
 		lblContrasenya.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblContrasenya.setBounds(27, 118, 98, 14);
+		lblContrasenya.setBounds(29, 142, 98, 14);
 		panel.add(lblContrasenya);
-		
+
 		textFieldContrasenya = new JTextField();
 		textFieldContrasenya.setColumns(10);
-		textFieldContrasenya.setBounds(27, 143, 242, 20);
+		textFieldContrasenya.setBounds(27, 167, 242, 20);
 		panel.add(textFieldContrasenya);
-		
-		JLabel lblRepiteLaContrasenya = new JLabel("Repite la contrasenya:");
-		lblRepiteLaContrasenya.setForeground(Color.DARK_GRAY);
-		lblRepiteLaContrasenya.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblRepiteLaContrasenya.setBounds(27, 174, 170, 14);
-		panel.add(lblRepiteLaContrasenya);
-		
-		textFieldContrasenyaRepetida = new JTextField();
-		textFieldContrasenyaRepetida.setColumns(10);
-		textFieldContrasenyaRepetida.setBounds(27, 199, 242, 20);
-		panel.add(textFieldContrasenyaRepetida);
-		
+
 		btnIniciDeSesioEnincideSesion = new JButton("Inici de sessió");
 		btnIniciDeSesioEnincideSesion.setForeground(Color.DARK_GRAY);
 		btnIniciDeSesioEnincideSesion.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnIniciDeSesioEnincideSesion.setBackground(Color.WHITE);
 		btnIniciDeSesioEnincideSesion.setBounds(76, 230, 157, 25);
 		panel.add(btnIniciDeSesioEnincideSesion);
-		
+
+		btnTornarIniciSessio = new JButton("<---");
+		btnTornarIniciSessio.setBounds(10, 11, 81, 43);
+		panel.add(btnTornarIniciSessio);
+		btnTornarIniciSessio.setForeground(Color.DARK_GRAY);
+		btnTornarIniciSessio.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnTornarIniciSessio.setBackground(Color.WHITE);
+
 		setVisible(false);
 	}
-
 
 	public JButton getbtnIniciDeSesioEnincideSesion() {
 		return btnIniciDeSesioEnincideSesion;
 	}
-	
+
+	public JTextField getTextFieldNom() {
+		return textFieldNom;
+	}
+
+	public JTextField getTextFieldContrasenya() {
+		return textFieldContrasenya;
+	}
+
+	public JButton getBtnTornarIniciSessio() {
+		return btnTornarIniciSessio;
+	}
+
 }

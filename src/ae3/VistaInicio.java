@@ -31,7 +31,7 @@ public class VistaInicio extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		btnIniciDeSesio = new JButton("Inici de sessió");
 		btnIniciDeSesio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -42,20 +42,20 @@ public class VistaInicio extends JFrame {
 		btnIniciDeSesio.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnIniciDeSesio.setBounds(143, 90, 157, 25);
 		contentPane.add(btnIniciDeSesio);
-		
+
 		JLabel lblNewLabel = new JLabel("Benvinguts a la nostra aplicació de memòria");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNewLabel.setBounds(16, 30, 408, 35);
 		contentPane.add(lblNewLabel);
-		
+
 		btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.setForeground(Color.WHITE);
 		btnRegistrarse.setBackground(Color.DARK_GRAY);
 		btnRegistrarse.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnRegistrarse.setBounds(143, 135, 157, 25);
 		contentPane.add(btnRegistrarse);
-		
+
 		setVisible(true);
 	}
 
@@ -66,5 +66,5 @@ public class VistaInicio extends JFrame {
 	public JButton getBtnRegistrarse() {
 		return btnRegistrarse;
 	}
-	
+
 }

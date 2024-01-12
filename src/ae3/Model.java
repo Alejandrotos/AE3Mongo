@@ -5,6 +5,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.json.JSONObject;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -88,16 +89,51 @@ public class Model {
 		collecioRecords.insertOne(record);
 	}
 
-	public static void insertUsuari(String userString, String pass) {
+	public static String insertRecordEnJTextArea(String usuari, int dificultat) {
+		FindIterable<Document> results = collecioRecords.find();
+
+		StringBuilder recordEnJtextPane = new StringBuilder();
+
+		for (Document result : results) {
+			recordEnJtextPane.append(result.getString("usuario")).append(result.getInteger("dificultad"))
+					.append(result.getString("timestamp"));
+
+			Number duracion = result.get("duracion", Number.class);
+
+			if (duracion != null) {
+				recordEnJtextPane.append(duracion.longValue());
+			}
+
+			recordEnJtextPane.append("\n");
+		}
+		return recordEnJtextPane.toString();
+	}
+
+	public static boolean insertUsuari(String usuari, String pass) {
+		conexioDBMongo();
 		Document user = new Document();
-		Bson filter = Filters.eq("user", userString);
+		Bson filter = Filters.eq("user", usuari);
 		Document result = collecioUsuaris.find(filter).first();
 		if (result != null) {
-			JOptionPane.showMessageDialog(null, "Usuari" + userString + "ya creat");
+			return false;
 		} else {
-			user.append("user", userString).append("pass", hashPassword(pass));
+			user.append("user", usuari).append("pass", hashPassword(pass));
 			collecioUsuaris.insertOne(user);
-			JOptionPane.showMessageDialog(null, "Usuari fet" + userString);
+			return true;
+		}
+	}
+
+	public static boolean iniciUsuari(String usuari, String pass) {
+		conexioDBMongo();
+		Document user = new Document();
+		Bson filter = Filters.eq("user", usuari);
+		Document result = collecioUsuaris.find(filter).first();
+		Bson filterContra = Filters.eq("pass", hashPassword(pass));
+		Document resultContra = collecioUsuaris.find(filterContra).first();
+		if (result != null && resultContra != null) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 

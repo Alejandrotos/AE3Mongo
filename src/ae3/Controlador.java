@@ -19,16 +19,21 @@ import javax.swing.plaf.synth.Region;
 public class Controlador {
 	private Model model;
 	private VistaInicio Inici;
-	// private VistaRegistro Registro = new VistaRegistro();
+	private VistaRegistro Registro = new VistaRegistro();
 	private VistaInicioSesion IniciSesio = new VistaInicioSesion();
-	private VistaPrincipal vistaPrincipal = new VistaPrincipal(); // setVisible(true) para hacer pruebas sin iniciar
-																	// sesion
+	private VistaPrincipal vistaPrincipal = new VistaPrincipal();
+
 	private ActionListener actionListenerbtnIniciDeSesio;
 	private ActionListener actionListenerbtnRegistrarse;
-	// Aqui irían ActionsListeners de VistaInicioSesion
-	// Aqui irían ActionsListeners de VistaInicioSesion
+	private ActionListener actionListenerbtnIniciDeSesioEnincideSesion;
+	private ActionListener actionListenerbtnRegistroEnRegistro;
+	private ActionListener actionListenerbtnTornarRegistre;
+	private ActionListener actionListenerbtnTornarIniciSessio;
+	private ActionListener actionListenerbtnSaloDeLa;
 	private ActionListener actionListenerbtnJugar;
 	private ActionListener actionListenerbtnGuardar;
+	
+	private String usuari;
 	private int quantitatBotons;
 	private ArrayList<JButton> botonsImatges;
 
@@ -40,13 +45,89 @@ public class Controlador {
 
 	public void Control() {
 		actionListenerbtnIniciDeSesio = new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				IniciSesio.setVisible(true);
+				Inici.setVisible(false);
 			}
 		};
 		Inici.getbtnIniciDeSesio().addActionListener(actionListenerbtnIniciDeSesio);
+		actionListenerbtnRegistrarse = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Registro.setVisible(true);
+				Inici.setVisible(false);
+			}
+		};
+		Inici.getBtnRegistrarse().addActionListener(actionListenerbtnRegistrarse);
+
+		actionListenerbtnIniciDeSesioEnincideSesion = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				usuari = IniciSesio.getTextFieldNom().getText();
+				String contrasenya = IniciSesio.getTextFieldContrasenya().getText();
+				if (usuari.isEmpty() || contrasenya.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (Model.iniciUsuari(usuari, contrasenya)) {
+					JOptionPane.showMessageDialog(null, "Usuari i contrasenya correctes");
+					vistaPrincipal.setVisible(true);
+					IniciSesio.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuari o contrasenya incorrectes");
+				}
+			}
+		};
+		IniciSesio.getbtnIniciDeSesioEnincideSesion().addActionListener(actionListenerbtnIniciDeSesioEnincideSesion);
+
+		actionListenerbtnRegistroEnRegistro = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String contrasenya = Registro.getTextFieldContrasenyaRegistro().getText();
+				String contrasenyaRepetida = Registro.getTextFieldContrasenyaRepetidaRegistro().getText();
+				if (usuari.isEmpty() || contrasenya.isEmpty() || contrasenyaRepetida.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (!contrasenya.equals(contrasenyaRepetida)) {
+					JOptionPane.showMessageDialog(null, "La contrasenya no es igual.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				} else if (Model.insertUsuari(usuari, contrasenya)) {
+					JOptionPane.showMessageDialog(null, "Usuari fet");
+					IniciSesio.setVisible(true);
+					Registro.setVisible(false);
+				} else {
+					JOptionPane.showMessageDialog(null, "Usuari ya creat");
+				}
+			}
+		};
+		Registro.getBtnRegistroEnRegistro().addActionListener(actionListenerbtnRegistroEnRegistro);
+
+		actionListenerbtnTornarRegistre = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Inici.setVisible(true);
+				Registro.setVisible(false);
+			}
+		};
+		Registro.getBtnTornarRegistre().addActionListener(actionListenerbtnTornarRegistre);
+
+		actionListenerbtnTornarIniciSessio = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				Inici.setVisible(true);
+				IniciSesio.setVisible(false);
+			}
+		};
+		IniciSesio.getBtnTornarIniciSessio().addActionListener(actionListenerbtnTornarIniciSessio);
 
 		// Funcionalidades de VistaPrincipal
+		actionListenerbtnSaloDeLa = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				//Model.insertRecord(nom, Principal.rdbtnDificultad());
+				//quantitatBotons = vistaPrincipal.getRdbtn4x2().isSelected() ? 8 : 16;
+				//Principal.setTextAreaFama(Model.insertRecordEnJTextArea(nom, vistaPrincipal.rdbtnDificultad()));
+			}
+		};
+		vistaPrincipal.getbtnSaloDeLaFama().addActionListener(actionListenerbtnSaloDeLa);
+		
 		actionListenerbtnJugar = new ActionListener() {
 			private ArrayList<String> rutasDeImages;
 			private JButton primerBotonClicado;
@@ -186,8 +267,9 @@ public class Controlador {
 							JOptionPane.INFORMATION_MESSAGE);
 				}
 				// Insert de timestamp y duracioTotal en records
-				model.insertRecord("prueba", quantitatBotons);
-				JOptionPane.showMessageDialog(null, "Temps guardat amb exit.", "Guardat", JOptionPane.INFORMATION_MESSAGE);
+				model.insertRecord(usuari, quantitatBotons);
+				JOptionPane.showMessageDialog(null, "Temps guardat amb exit.", "Guardat",
+						JOptionPane.INFORMATION_MESSAGE);
 
 				// Resetear interfaz
 				for (JButton boton : botonsImatges) {

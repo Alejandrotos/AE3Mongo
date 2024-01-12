@@ -7,6 +7,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -18,11 +19,12 @@ public class VistaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private JButton btnJugar;
 	private JButton btnGuardar;
-	private JButton btnSalDeLa;
+	private JButton btnSaloDeLaFama;
 	private JRadioButton rdbtn4x4;
 	private JRadioButton rdbtn4x2;
 	private static ArrayList<JButton> buttonsImatgesArray = new ArrayList<>();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextArea textAreaFama;
 
 	public JRadioButton getRdbtn4x4() {
 		return rdbtn4x4;
@@ -48,8 +50,16 @@ public class VistaPrincipal extends JFrame {
 		return btnGuardar;
 	}
 
-	public JButton getBtnSalDeLa() {
-		return btnSalDeLa;
+	public JButton getbtnSaloDeLaFama() {
+		return btnSaloDeLaFama;
+	}
+
+	public JTextArea getTextAreaFama() {
+		return textAreaFama;
+	}
+
+	public void setTextAreaFama(String textAreaFama) {
+		this.textAreaFama.setText(textAreaFama);
 	}
 
 	public static ArrayList<JButton> getButtonsImatgesArray() {
@@ -83,12 +93,12 @@ public class VistaPrincipal extends JFrame {
 		btnGuardar.setBounds(50, 185, 157, 25);
 		contentPane.add(btnGuardar);
 
-		btnSalDeLa = new JButton("Saló de la fama");
-		btnSalDeLa.setForeground(new Color(255, 255, 255));
-		btnSalDeLa.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnSalDeLa.setBackground(Color.DARK_GRAY);
-		btnSalDeLa.setBounds(50, 289, 157, 25);
-		contentPane.add(btnSalDeLa);
+		btnSaloDeLaFama = new JButton("Saló de la fama");
+		btnSaloDeLaFama.setForeground(new Color(255, 255, 255));
+		btnSaloDeLaFama.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnSaloDeLaFama.setBackground(Color.DARK_GRAY);
+		btnSaloDeLaFama.setBounds(50, 289, 157, 25);
+		contentPane.add(btnSaloDeLaFama);
 
 		rdbtn4x4 = new JRadioButton("4x4");
 		rdbtn4x4.setSelected(true);
@@ -123,7 +133,7 @@ public class VistaPrincipal extends JFrame {
 			buttonsImatgesArray.add(boton);
 		}
 
-		setVisible(true);
+		setVisible(false);
 	}
 
 }
