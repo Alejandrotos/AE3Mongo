@@ -45,7 +45,6 @@ import javax.swing.Timer;
 public class Model {
 	private static MongoClient mongoClient;
 	private static MongoDatabase database;
-	private static String usuari; // Nom de usuari del txtField de Inici De Usuari (hacer setUsuari())
 	private static MongoCollection<Document> collecioRecords;
 	private static MongoCollection<Document> collecioImatges;
 	private static MongoCollection<Document> collecioUsuaris;
@@ -87,6 +86,17 @@ public class Model {
 				.append("duracion", duracioTotal);
 
 		collecioRecords.insertOne(record);
+	}
+
+	public ArrayList<JSONObject> selectRecords() {
+		ArrayList<JSONObject> llistaRecordsObjects = new ArrayList<JSONObject>();
+
+		MongoCursor<Document> cursor = collecioRecords.find().iterator();
+		while (cursor.hasNext()) {
+			JSONObject obj = new JSONObject(cursor.next().toJson());
+			llistaRecordsObjects.add(obj);
+		}
+		return llistaRecordsObjects;
 	}
 
 	public static String insertRecordEnJTextArea(String usuari, int dificultat) {

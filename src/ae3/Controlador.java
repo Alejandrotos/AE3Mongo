@@ -22,6 +22,7 @@ public class Controlador {
 	private VistaRegistro Registro = new VistaRegistro();
 	private VistaInicioSesion IniciSesio = new VistaInicioSesion();
 	private VistaPrincipal vistaPrincipal = new VistaPrincipal();
+	private VistaFama vistaFama = new VistaFama();
 
 	private ActionListener actionListenerbtnIniciDeSesio;
 	private ActionListener actionListenerbtnRegistrarse;
@@ -80,20 +81,22 @@ public class Controlador {
 
 		actionListenerbtnRegistroEnRegistro = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String nom = Registro.getTextFieldNomRegistro().getText();
 				String contrasenya = Registro.getTextFieldContrasenyaRegistro().getText();
 				String contrasenyaRepetida = Registro.getTextFieldContrasenyaRepetidaRegistro().getText();
-				if (usuari.isEmpty() || contrasenya.isEmpty() || contrasenyaRepetida.isEmpty()) {
+				if (nom.isEmpty() || contrasenya.isEmpty() || contrasenyaRepetida.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Els apartats no poden estar buits.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				} else if (!contrasenya.equals(contrasenyaRepetida)) {
 					JOptionPane.showMessageDialog(null, "La contrasenya no es igual.", "Error",
 							JOptionPane.ERROR_MESSAGE);
-				} else if (Model.insertUsuari(usuari, contrasenya)) {
+				} else if (Model.insertUsuari(nom, contrasenya)) {
 					JOptionPane.showMessageDialog(null, "Usuari fet");
 					IniciSesio.setVisible(true);
 					Registro.setVisible(false);
 				} else {
-					JOptionPane.showMessageDialog(null, "Usuari ya creat");
+					JOptionPane.showMessageDialog(null, "Ya existeix un usuari amb eixe nom.", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		};
@@ -121,9 +124,8 @@ public class Controlador {
 		actionListenerbtnSaloDeLa = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				//Model.insertRecord(nom, Principal.rdbtnDificultad());
-				//quantitatBotons = vistaPrincipal.getRdbtn4x2().isSelected() ? 8 : 16;
-				//Principal.setTextAreaFama(Model.insertRecordEnJTextArea(nom, vistaPrincipal.rdbtnDificultad()));
+				vistaFama.setVisible(true);
+				vistaFama.carregarSelectEnTaula(model.selectRecords());
 			}
 		};
 		vistaPrincipal.getbtnSaloDeLaFama().addActionListener(actionListenerbtnSaloDeLa);
