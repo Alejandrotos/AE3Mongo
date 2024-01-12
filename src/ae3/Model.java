@@ -159,7 +159,7 @@ public class Model {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			byte[] hash = digest.digest(password.getBytes());
 
-			// Convertir el hash a una representación hexadecimal
+			// Convertir el hash a una representació hexadecimal
 			StringBuilder hexHash = new StringBuilder();
 			for (byte b : hash) {
 				hexHash.append(String.format("%02x", b));
@@ -168,7 +168,6 @@ public class Model {
 			return hexHash.toString();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
-			// Manejar la excepción apropiadamente en tu aplicación
 			return null;
 		}
 	}

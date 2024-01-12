@@ -54,20 +54,12 @@ public class Controlador {
 				botonsImatges = VistaPrincipal.getButtonsImatgesArray();
 				rutasDeImages = Model.getRutaDeImages();
 
-				// ArrayList<JButton> randomNutonsImatges = new
-				// ArrayList<JButton>(botonsImatges);
-
-				File carpetaImg = new File("img");
-				String[] archivos = carpetaImg.list();
-
 				Model.extraureImatges();
 
-				// Verificar el modo de juego
 				cantidadBotones = vistaPrincipal.getRdbtn4x2().isSelected() ? 8 : 16;
 
 				asignarIconosAleatoriosABotones();
 
-				// Asignar ActionListener a los botones
 				for (JButton boton : botonsImatges) {
 					boton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
@@ -78,12 +70,6 @@ public class Controlador {
 			}
 
 			private void asignarIconosAleatoriosABotones() {
-				// Obtén las rutas de las imágenes aleatorias
-				/*
-				 * ArrayList<String> rutasAleatorias = obtenerRutasAleatorias();
-				 * ArrayList<JButton> botonsAletoris = obtindreBotonsAletoris();
-				 */
-
 				ArrayList<Integer> indicesImagenes = new ArrayList<>();
 				for (int i = 0; i < rutasDeImages.size(); i++) {
 					indicesImagenes.add(i);
@@ -96,7 +82,6 @@ public class Controlador {
 				}
 				Collections.shuffle(indicesBotones);
 
-				// Asigna la información a los botones
 				for (int i = 0; i < cantidadBotones; i++) {
 					int indiceImagen = indicesImagenes.get(i / 2);
 					String rutaImagen = rutasDeImages.get(indiceImagen);
@@ -112,7 +97,6 @@ public class Controlador {
 
 			private void manejarClicBoton(JButton botonClicado) {
 
-				// Verificar si el botón ya ha sido emparejado
 				if ((boolean) botonClicado.getClientProperty("iconoVisible")) {
 					return;
 				}
@@ -122,26 +106,22 @@ public class Controlador {
 					primerBotonClicado = botonClicado;
 					mostrarIcono(primerBotonClicado);
 				} else {
-					// Segundo clic
+					// Segon clic
 
 					Timer timer = null;
 					segundoBotonClicado = botonClicado;
 					mostrarIcono(segundoBotonClicado);
 
-					// Verificar si los iconos coinciden
 					if (sonIconosIguales(primerBotonClicado, segundoBotonClicado)) {
-						// Dejar los iconos permanentemente
 						primerBotonClicado.putClientProperty("iconoVisible", true);
 						segundoBotonClicado.putClientProperty("iconoVisible", true);
 
-						// Desactivar los botones emparejados
 						primerBotonClicado.setEnabled(false);
 						segundoBotonClicado.setEnabled(false);
 
 						primerBotonClicado = null;
 						segundoBotonClicado = null;
 					} else {
-						// Ocultar los iconos después de un breve período
 						timer = new Timer(500, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
