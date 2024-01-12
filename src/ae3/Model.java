@@ -15,6 +15,8 @@ import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.*;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.ByteArrayInputStream;
@@ -28,11 +30,14 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 public class Model {
 	private static MongoClient mongoClient;
@@ -41,13 +46,10 @@ public class Model {
 	private static MongoCollection<Document> collecioImatges;
 	private static MongoCollection<Document> collecioUsuaris;
 	private static ArrayList<String> rutasDeImages = new ArrayList<>();
-	private static Instant iniciPartida;
+
+	private static Timer timer;
 	private static long duracioTotal;
 	private static String timestamp;
-
-	public Instant getIniciPartida() {
-		return iniciPartida;
-	}
 
 	public ArrayList<String> getRutaDeImages() {
 		return rutasDeImages;
@@ -55,18 +57,18 @@ public class Model {
 
 	public static void conexioDBMongo() {
 		try {
-			
+
 			String jsonString = new String(Files.readAllBytes(Paths.get("conexion.json")));
-		
+
 			JSONObject configDoc = new JSONObject(jsonString);
 			String ip = configDoc.getString("ip");
 			int port = configDoc.getInt("port");
-			
+
 			String databaseName = configDoc.getString("database");
-			
+
 			mongoClient = MongoClients.create(String.format("mongodb://%s:%d", ip, port));
 			database = mongoClient.getDatabase(databaseName);
-			
+
 			collecioRecords = database.getCollection("records");
 			collecioImatges = database.getCollection("img");
 			collecioUsuaris = database.getCollection("usuarios");
@@ -77,7 +79,7 @@ public class Model {
 
 	public static void insertRecord(String usuari, int dificultat) {
 		Document record = new Document();
-		record.append("usuario", usuari).append("dificultad", dificultat).append("timestamp", generateTimestamp())
+		record.append("usuario", usuari).append("dificultad", dificultat).append("timestamp", timestamp)
 				.append("duracion", duracioTotal);
 
 		collecioRecords.insertOne(record);
@@ -96,12 +98,29 @@ public class Model {
 		}
 	}
 
-	public static void iniciarPartida() {
-		iniciPartida = Instant.now();
+	public void iniciarContadorPartida() {
+		generateTimestamp();
+		System.out.print("Timestamp generado: " + timestamp);
+		duracioTotal = 0;
+		ActionListener actionListener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				duracioTotal++;
+				// Actualizar interfaz gráfica con el tiempo total si es necesario
+			}
+		};
+		timer = new Timer(1000, actionListener);
+		timer.start();
 	}
 
-	public static void calcularDuracioEnSegons() {
-		duracioTotal = Duration.between(iniciPartida, Instant.now()).getSeconds();
+	public void detindreContador() {
+		if (timer != null && timer.isRunning()) {
+			timer.stop();
+			// Lógica adicional cuando detienes el contador (puedes ajustarla según tus
+			// necesidades)
+			System.out.println("Contador detenido. Tiempo total: " + duracioTotal + " segundos");
+		}
+		// Se guarda cuando el usuario le da a el boton guardar
 	}
 
 	public void extraureImatges() {
@@ -144,14 +163,10 @@ public class Model {
 		return llistaImatgesJson;
 	}
 
-	private static String generateTimestamp() {
-		String formato = "yyyyMMdd_HHmmss";
-		SimpleDateFormat sdf = new SimpleDateFormat(formato);
-
-		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-		timestamp = sdf.format(Date.from(iniciPartida));
-
-		return timestamp;
+	private static void generateTimestamp() {
+		DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+		LocalDateTime fechaActual = LocalDateTime.now();
+		timestamp = formatoFecha.format(fechaActual);
 	}
 
 	private static String hashPassword(String password) {

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import javax.print.attribute.standard.ReferenceUriSchemesSupported;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ import javax.swing.Timer;
 import javax.swing.plaf.synth.Region;
 
 public class Controlador {
-	private Model Model;
+	private Model model;
 	private VistaInicio Inici;
 	// private VistaRegistro Registro = new VistaRegistro();
 	private VistaInicioSesion IniciSesio = new VistaInicioSesion();
@@ -30,7 +31,7 @@ public class Controlador {
 
 	Controlador(VistaInicio Inici, Model Model) {
 		this.Inici = Inici;
-		this.Model = Model;
+		this.model = Model;
 		Control();
 	}
 
@@ -51,10 +52,11 @@ public class Controlador {
 			private JButton segundoBotonClicado;
 
 			public void actionPerformed(ActionEvent e) {
-				botonsImatges = VistaPrincipal.getButtonsImatgesArray();
-				rutasDeImages = Model.getRutaDeImages();
+				model.iniciarContadorPartida();
+				model.extraureImatges();
 
-				Model.extraureImatges();
+				botonsImatges = VistaPrincipal.getButtonsImatgesArray();
+				rutasDeImages = model.getRutaDeImages();
 
 				cantidadBotones = vistaPrincipal.getRdbtn4x2().isSelected() ? 8 : 16;
 
@@ -119,10 +121,13 @@ public class Controlador {
 						primerBotonClicado.setEnabled(false);
 						segundoBotonClicado.setEnabled(false);
 
+						if (finalDelJoc())
+							model.detindreContador();
+
 						primerBotonClicado = null;
 						segundoBotonClicado = null;
 					} else {
-						timer = new Timer(500, new ActionListener() {
+						timer = new Timer(300, new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								ocultarIcono(primerBotonClicado);
@@ -136,6 +141,19 @@ public class Controlador {
 						timer.start();
 					}
 				}
+			}
+
+			private boolean finalDelJoc() {
+				int contador = 0;
+				for (JButton jButton : botonsImatges) {
+					contador++;
+					if (contador > cantidadBotones)
+						break;
+					if (!(boolean) jButton.getClientProperty("iconoVisible")) {
+						return false;
+					}
+				}
+				return true;
 			}
 
 			private void mostrarIcono(JButton boton) {
