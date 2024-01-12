@@ -11,6 +11,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.ReturnDocument;
+import com.mongodb.client.model.Sorts;
 
 import static com.mongodb.client.model.Filters.*;
 
@@ -42,13 +44,14 @@ import javax.swing.Timer;
 public class Model {
 	private static MongoClient mongoClient;
 	private static MongoDatabase database;
+	private static String usuari; // Nom de usuari del txtField de Inici De Usuari (hacer setUsuari())
 	private static MongoCollection<Document> collecioRecords;
 	private static MongoCollection<Document> collecioImatges;
 	private static MongoCollection<Document> collecioUsuaris;
 	private static ArrayList<String> rutasDeImages = new ArrayList<>();
 
 	private static Timer timer;
-	private static long duracioTotal;
+	private static int duracioTotal;
 	private static String timestamp;
 
 	public ArrayList<String> getRutaDeImages() {
@@ -77,7 +80,7 @@ public class Model {
 		}
 	}
 
-	public static void insertRecord(String usuari, int dificultat) {
+	public void insertRecord(String usuari, int dificultat) {
 		Document record = new Document();
 		record.append("usuario", usuari).append("dificultad", dificultat).append("timestamp", timestamp)
 				.append("duracion", duracioTotal);
@@ -106,7 +109,6 @@ public class Model {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				duracioTotal++;
-				// Actualizar interfaz gráfica con el tiempo total si es necesario
 			}
 		};
 		timer = new Timer(1000, actionListener);
@@ -120,7 +122,6 @@ public class Model {
 			// necesidades)
 			System.out.println("Contador detenido. Tiempo total: " + duracioTotal + " segundos");
 		}
-		// Se guarda cuando el usuario le da a el boton guardar
 	}
 
 	public void extraureImatges() {
@@ -150,6 +151,25 @@ public class Model {
 			System.err.println(e);
 		}
 
+	}
+
+	public boolean newRecord(int duracioRecord) {
+		boolean newRecord = false;
+		if (duracioTotal < duracioRecord)
+			newRecord = true;
+
+		return newRecord;
+	}
+
+	public int selectBestRecord(int dificultat) {
+		Bson filtro = Filters.eq("dificultad", dificultat);
+		Bson orden = Sorts.ascending("duracion");
+
+		Document record = collecioRecords.find(filtro).sort(orden).first();
+		JSONObject obj = new JSONObject(record.toJson());
+		int duracioRecord = obj.getInt("duracion");
+
+		return duracioRecord;
 	}
 
 	private ArrayList<JSONObject> selectImatgesJSon() throws IOException {

@@ -28,6 +28,9 @@ public class Controlador {
 	// Aqui irían ActionsListeners de VistaInicioSesion
 	// Aqui irían ActionsListeners de VistaInicioSesion
 	private ActionListener actionListenerbtnJugar;
+	private ActionListener actionListenerbtnGuardar;
+	private int quantitatBotons;
+	private ArrayList<JButton> botonsImatges;
 
 	Controlador(VistaInicio Inici, Model Model) {
 		this.Inici = Inici;
@@ -45,9 +48,7 @@ public class Controlador {
 
 		// Funcionalidades de VistaPrincipal
 		actionListenerbtnJugar = new ActionListener() {
-			private ArrayList<JButton> botonsImatges;
 			private ArrayList<String> rutasDeImages;
-			private int cantidadBotones;
 			private JButton primerBotonClicado;
 			private JButton segundoBotonClicado;
 
@@ -58,7 +59,7 @@ public class Controlador {
 				botonsImatges = VistaPrincipal.getButtonsImatgesArray();
 				rutasDeImages = model.getRutaDeImages();
 
-				cantidadBotones = vistaPrincipal.getRdbtn4x2().isSelected() ? 8 : 16;
+				quantitatBotons = vistaPrincipal.getRdbtn4x2().isSelected() ? 8 : 16;
 
 				asignarIconosAleatoriosABotones();
 
@@ -79,12 +80,12 @@ public class Controlador {
 				Collections.shuffle(indicesImagenes);
 
 				ArrayList<Integer> indicesBotones = new ArrayList<>();
-				for (int i = 0; i < cantidadBotones; i++) {
+				for (int i = 0; i < quantitatBotons; i++) {
 					indicesBotones.add(i);
 				}
 				Collections.shuffle(indicesBotones);
 
-				for (int i = 0; i < cantidadBotones; i++) {
+				for (int i = 0; i < quantitatBotons; i++) {
 					int indiceImagen = indicesImagenes.get(i / 2);
 					String rutaImagen = rutasDeImages.get(indiceImagen);
 
@@ -147,7 +148,7 @@ public class Controlador {
 				int contador = 0;
 				for (JButton jButton : botonsImatges) {
 					contador++;
-					if (contador > cantidadBotones)
+					if (contador > quantitatBotons)
 						break;
 					if (!(boolean) jButton.getClientProperty("iconoVisible")) {
 						return false;
@@ -174,6 +175,32 @@ public class Controlador {
 		};
 
 		vistaPrincipal.getBtnJugar().addActionListener(actionListenerbtnJugar);
+
+		actionListenerbtnGuardar = new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				// Mensaje de enhorabuena si es el mejor tiempo del usuari
+				int bestRecord = model.selectBestRecord(quantitatBotons);
+				if (model.newRecord(bestRecord)) {
+					JOptionPane.showMessageDialog(null, "Has aconseguit un nou record.", "FELICITATS",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				// Insert de timestamp y duracioTotal en records
+				model.insertRecord("prueba", quantitatBotons);
+				JOptionPane.showMessageDialog(null, "Temps guardat amb exit.", "Guardat", JOptionPane.INFORMATION_MESSAGE);
+
+				// Resetear interfaz
+				for (JButton boton : botonsImatges) {
+					boton.setEnabled(false);
+					boton.setForeground(Color.WHITE);
+					boton.setBackground(Color.DARK_GRAY);
+					boton.putClientProperty("rutaImatge", null);
+					boton.putClientProperty("iconoVisible", false);
+					boton.setIcon(null);
+				}
+			}
+		};
+		vistaPrincipal.getBtnGuardar().addActionListener(actionListenerbtnGuardar);
 	}
 
 }
