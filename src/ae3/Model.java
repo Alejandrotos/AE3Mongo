@@ -4,6 +4,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.json.JSONObject;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -25,6 +26,7 @@ import java.util.Base64;
 import java.util.TimeZone;
 
 import javax.swing.JOptionPane;
+
 public class Model {
 	private static MongoClient mongoClient;
 	private static MongoDatabase database;
@@ -36,27 +38,27 @@ public class Model {
 	private static String timestamp;
 
 	public static void conexioDBMongo() {
-        try {
-            // Leer el contenido del archivo JSON
-            String jsonString = new String(Files.readAllBytes(Paths.get("conexion.json")));
+		try {
+			// Leer el contenido del archivo JSON
+			String jsonString = new String(Files.readAllBytes(Paths.get("conexion.json")));
 
-            // Crear un objeto JSONObject a partir de la cadena leída
-            JSONObject configDoc = new JSONObject(jsonString);
+			// Crear un objeto JSONObject a partir de la cadena leída
+			JSONObject configDoc = new JSONObject(jsonString);
 
-            String ip = configDoc.getString("ip");
-            int port = configDoc.getInt("port");
-            String databaseName = configDoc.getString("database");
+			String ip = configDoc.getString("ip");
+			int port = configDoc.getInt("port");
+			String databaseName = configDoc.getString("database");
 
-            mongoClient = MongoClients.create(String.format("mongodb://%s:%d", ip, port));
-            database = mongoClient.getDatabase(databaseName);
+			mongoClient = MongoClients.create(String.format("mongodb://%s:%d", ip, port));
+			database = mongoClient.getDatabase(databaseName);
 
-            collecioRecords = database.getCollection("records");
-            collecioImatges = database.getCollection("img");
-            collecioUsuaris = database.getCollection("usuarios");
-        } catch (IOException e) {
+			collecioRecords = database.getCollection("records");
+			collecioImatges = database.getCollection("img");
+			collecioUsuaris = database.getCollection("usuarios");
+		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+		}
+	}
 
 	public static void insertRecord(String usuari, int dificultat) {
 		Document record = new Document();
@@ -65,10 +67,32 @@ public class Model {
 
 		collecioRecords.insertOne(record);
 	}
-	
+
 	public static String insertRecordEnJTextArea(String usuari, int dificultat) {
-		String recordEnJtextPane = usuari + dificultat + generateTimestamp() + duracioTotal;
-		return recordEnJtextPane;
+		// Realizar consulta a la colección y obtener un cursor de resultados
+		FindIterable<Document> results = collecioRecords.find();
+
+		// Inicializar un StringBuilder para construir el texto
+		StringBuilder recordEnJtextPane = new StringBuilder();
+
+		// Iterar sobre los resultados y agregarlos al StringBuilder
+		for (Document result : results) {
+			recordEnJtextPane.append(result.getString("usuario")).append(result.getInteger("dificultad"))
+					.append(result.getString("timestamp"));
+
+			// Obtener el campo "duracion" como objeto Number
+			Number duracion = result.get("duracion", Number.class);
+
+			if (duracion != null) {
+				// Convertir el valor de duracion a Long
+				recordEnJtextPane.append(duracion.longValue());
+			}
+
+			recordEnJtextPane.append("\n");
+		}
+
+		// Devolver el texto construido como un String
+		return recordEnJtextPane.toString();
 	}
 
 	public static boolean insertUsuari(String userString, String pass) {
@@ -76,27 +100,27 @@ public class Model {
 		Document user = new Document();
 		Bson filter = Filters.eq("user", userString);
 		Document result = collecioUsuaris.find(filter).first();
-        if (result != null) {
-        	return false;
-        } else {
-            user.append("user", userString).append("pass", hashPassword(pass));
-            collecioUsuaris.insertOne(user);
-            return true;
-        }
+		if (result != null) {
+			return false;
+		} else {
+			user.append("user", userString).append("pass", hashPassword(pass));
+			collecioUsuaris.insertOne(user);
+			return true;
+		}
 	}
-	
+
 	public static boolean iniciUsuari(String userString, String pass) {
 		conexioDBMongo();
 		Document user = new Document();
 		Bson filter = Filters.eq("user", userString);
 		Document result = collecioUsuaris.find(filter).first();
-		Bson filterContra = Filters.eq("pass", pass);
+		Bson filterContra = Filters.eq("pass", hashPassword(pass));
 		Document resultContra = collecioUsuaris.find(filterContra).first();
-        if (result != null && resultContra != null) {
-        	return true;
-        } else {
-            return false;
-        }
+		if (result != null && resultContra != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public static void iniciarPartida() {
@@ -110,7 +134,7 @@ public class Model {
 	public Instant getIniciPartida() {
 		return iniciPartida;
 	}
-	
+
 	private static String generateTimestamp() {
 		String formato = "yyyyMMdd_HHmmss";
 		SimpleDateFormat sdf = new SimpleDateFormat(formato);
@@ -120,24 +144,24 @@ public class Model {
 
 		return timestamp;
 	}
-	
+
 	private static String hashPassword(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes());
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(password.getBytes());
 
-            // Convertir el hash a una representación hexadecimal
-            StringBuilder hexHash = new StringBuilder();
-            for (byte b : hash) {
-                hexHash.append(String.format("%02x", b));
-            }
+			// Convertir el hash a una representación hexadecimal
+			StringBuilder hexHash = new StringBuilder();
+			for (byte b : hash) {
+				hexHash.append(String.format("%02x", b));
+			}
 
-            return hexHash.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            // Manejar la excepción apropiadamente en tu aplicación
-            return null;
-        }
-    }
+			return hexHash.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			// Manejar la excepción apropiadamente en tu aplicación
+			return null;
+		}
+	}
 
 }

@@ -105,7 +105,7 @@ public class Controlador {
 
 			public void actionPerformed(ActionEvent e) {
 				String nom = IniciSesio.getTextFieldNom().getText();
-				Model.insertRecord(nom, Principal.rdbtnDificultad());
+				//Model.insertRecord(nom, Principal.rdbtnDificultad());
 				Principal.setTextAreaFama(Model.insertRecordEnJTextArea(nom, Principal.rdbtnDificultad()));
 			}
 		};

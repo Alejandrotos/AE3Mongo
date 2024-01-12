@@ -234,7 +234,7 @@ public class VistaPrincipal extends JFrame {
 	}
 
 	public void setTextAreaFama(String textAreaFama) {
-		//this.textAreaFama = textAreaFama;
+	    this.textAreaFama.setText(textAreaFama);
 	}
 	
 	
