@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 import javax.swing.JTable;
+import javax.swing.JButton;
 
 public class VistaFama extends JFrame {
 
@@ -24,6 +25,7 @@ public class VistaFama extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private DefaultTableModel tableModel;
+	private JButton btnTornarPrincipal;
 
 	/**
 	 * Create the frame.
@@ -39,7 +41,7 @@ public class VistaFama extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lbltitolFama = new JLabel("Saló de la fama");
-		lbltitolFama.setBounds(375, 11, 144, 22);
+		lbltitolFama.setBounds(375, 32, 144, 22);
 		lbltitolFama.setForeground(Color.WHITE);
 		lbltitolFama.setFont(new Font("Tahoma", Font.BOLD, 18));
 		contentPane.add(lbltitolFama);
@@ -47,7 +49,7 @@ public class VistaFama extends JFrame {
 		tableModel = new DefaultTableModel();
 
 		JScrollPane scrollPaneTable = new JScrollPane();
-		scrollPaneTable.setBounds(10, 30, 630, 266);
+		scrollPaneTable.setBounds(118, 65, 640, 266);
 		contentPane.add(scrollPaneTable);
 
 		table = new JTable(tableModel);
@@ -55,6 +57,13 @@ public class VistaFama extends JFrame {
 		table.setColumnSelectionAllowed(true);
 		scrollPaneTable.setViewportView(table);
 		table.setBackground(Color.LIGHT_GRAY);
+		
+		btnTornarPrincipal = new JButton("<---");
+		btnTornarPrincipal.setForeground(Color.DARK_GRAY);
+		btnTornarPrincipal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnTornarPrincipal.setBackground(Color.WHITE);
+		btnTornarPrincipal.setBounds(10, 11, 81, 43);
+		contentPane.add(btnTornarPrincipal);
 
 		setVisible(false);
 	}
@@ -88,4 +97,9 @@ public class VistaFama extends JFrame {
 		}
 	}
 
+	public JButton getBtnTornarPrincipal() {
+		return btnTornarPrincipal;
+	}
+	
+	
 }

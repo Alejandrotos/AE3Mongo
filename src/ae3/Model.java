@@ -58,6 +58,13 @@ public class Model {
 		return rutasDeImages;
 	}
 
+	/**
+	 * Establece la conexión con la base de datos MongoDB utilizando la
+	 * configuración especificada en el archivo "conexion.json".
+	 * 
+	 * @throws IOException Se lanza si hay un error durante la lectura del archivo
+	 *                     JSON.
+	 */
 	public static void conexioDBMongo() {
 		try {
 
@@ -80,6 +87,13 @@ public class Model {
 		}
 	}
 
+	/**
+	 * Inserta un nuevo registro de partida en la colección de registros de la base
+	 * de datos MongoDB.
+	 * 
+	 * @param usuari     Nombre de usuario asociado al registro de la partida.
+	 * @param dificultat Nivel de dificultad de la partida.
+	 */
 	public void insertRecord(String usuari, int dificultat) {
 		Document record = new Document();
 		record.append("usuario", usuari).append("dificultad", dificultat).append("timestamp", timestamp)
@@ -88,6 +102,12 @@ public class Model {
 		collecioRecords.insertOne(record);
 	}
 
+	/**
+	 * Selecciona y devuelve una lista de registros en formato JSON desde la
+	 * colección de registros.
+	 * 
+	 * @return ArrayList de objetos JSON que representan los registros.
+	 */
 	public ArrayList<JSONObject> selectRecords() {
 		ArrayList<JSONObject> llistaRecordsObjects = new ArrayList<JSONObject>();
 
@@ -99,6 +119,14 @@ public class Model {
 		return llistaRecordsObjects;
 	}
 
+	/**
+	 * Recupera registros de la base de datos y los formatea como una cadena para
+	 * ser insertada en un JTextArea.
+	 * 
+	 * @param usuari     Nombre de usuario asociado al registro de la partida.
+	 * @param dificultat Nivel de dificultad de la partida.
+	 * @return String que representa los registros formateados para JTextArea.
+	 */
 	public static String insertRecordEnJTextArea(String usuari, int dificultat) {
 		FindIterable<Document> results = collecioRecords.find();
 
@@ -119,6 +147,14 @@ public class Model {
 		return recordEnJtextPane.toString();
 	}
 
+	/**
+	 * Inserta un nuevo usuario en la colección de usuarios de la base de datos
+	 * MongoDB, verificando previamente si el usuario ya existe.
+	 * 
+	 * @param usuari Nombre de usuario a ser insertado.
+	 * @param pass   Contraseña asociada al nuevo usuario.
+	 * @return true si la inserción es exitosa, false si el usuario ya existe.
+	 */
 	public static boolean insertUsuari(String usuari, String pass) {
 		conexioDBMongo();
 		Document user = new Document();
@@ -133,6 +169,14 @@ public class Model {
 		}
 	}
 
+	/**
+	 * Verifica las credenciales de un usuario en la base de datos MongoDB.
+	 * 
+	 * @param usuari Nombre de usuario a ser verificado.
+	 * @param pass   Contraseña asociada al usuario.
+	 * @return true si las credenciales son válidas, false si el usuario no existe o
+	 *         la contraseña no coincide.
+	 */
 	public static boolean iniciUsuari(String usuari, String pass) {
 		conexioDBMongo();
 		Document user = new Document();
@@ -147,6 +191,10 @@ public class Model {
 		}
 	}
 
+	/**
+	 * Inicia un contador de duración de la partida, generando un timestamp y
+	 * configurando un temporizador para incrementar la duración total cada segundo.
+	 */
 	public void iniciarContadorPartida() {
 		generateTimestamp();
 		System.out.print("Timestamp generado: " + timestamp);
@@ -161,6 +209,10 @@ public class Model {
 		timer.start();
 	}
 
+	/**
+	 * Detiene el contador de duración de la partida si está en ejecución, e imprime
+	 * información adicional.
+	 */
 	public void detindreContador() {
 		if (timer != null && timer.isRunning()) {
 			timer.stop();
@@ -170,6 +222,12 @@ public class Model {
 		}
 	}
 
+	/**
+	 * Extrae imágenes de la base de datos, las convierte de formato Base64 a
+	 * archivos de imagen y las guarda en la carpeta "img".
+	 * 
+	 * @throws IOException Si ocurre un error de E/S al procesar las imágenes.
+	 */
 	public void extraureImatges() {
 		try {
 			ArrayList<JSONObject> objImatges = selectImatgesJSon();
@@ -199,6 +257,14 @@ public class Model {
 
 	}
 
+	/**
+	 * Verifica si la duración total de la partida es menor que la duración de un
+	 * récord existente.
+	 * 
+	 * @param duracioRecord Duración del récord existente a ser comparada.
+	 * @return true si la duración total es menor que la duración del récord, false
+	 *         en caso contrario.
+	 */
 	public boolean newRecord(int duracioRecord) {
 		boolean newRecord = false;
 		if (duracioTotal < duracioRecord)
@@ -207,6 +273,14 @@ public class Model {
 		return newRecord;
 	}
 
+	/**
+	 * Selecciona y devuelve la duración del récord más bajo para la dificultad
+	 * especificada.
+	 * 
+	 * @param dificultat Nivel de dificultad para el cual se busca el récord.
+	 * @return Duración del récord más bajo para la dificultad especificada, o 0 si
+	 *         no hay récord disponible.
+	 */
 	public int selectBestRecord(int dificultat) {
 		Bson filtro = Filters.eq("dificultad", dificultat);
 		Bson orden = Sorts.ascending("duracion");
@@ -218,6 +292,13 @@ public class Model {
 		return duracioRecord;
 	}
 
+	/**
+	 * Selecciona y devuelve una lista de objetos JSON representando imágenes desde
+	 * la colección de imágenes.
+	 * 
+	 * @return ArrayList de objetos JSON que representan las imágenes.
+	 * @throws IOException Si ocurre un error de E/S al procesar las imágenes.
+	 */
 	private ArrayList<JSONObject> selectImatgesJSon() throws IOException {
 		ArrayList<JSONObject> llistaImatgesJson = new ArrayList<JSONObject>();
 		MongoCursor<Document> cursor = collecioImatges.find().iterator();
@@ -229,12 +310,22 @@ public class Model {
 		return llistaImatgesJson;
 	}
 
+	/**
+	 * Genera un timestamp con el formato "yyyyMMdd_HHmmss" y lo almacena en la
+	 * variable de clase 'timestamp'.
+	 */
 	private static void generateTimestamp() {
 		DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
 		LocalDateTime fechaActual = LocalDateTime.now();
 		timestamp = formatoFecha.format(fechaActual);
 	}
 
+	/**
+	 * Genera un hash SHA-256 a partir de la contraseña proporcionada.
+	 * 
+	 * @param password Contraseña a ser hasheada.
+	 * @return Representación hexadecimal del hash SHA-256.
+	 */
 	private static String hashPassword(String password) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");

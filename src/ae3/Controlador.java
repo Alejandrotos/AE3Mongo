@@ -33,6 +33,7 @@ public class Controlador {
 	private ActionListener actionListenerbtnSaloDeLa;
 	private ActionListener actionListenerbtnJugar;
 	private ActionListener actionListenerbtnGuardar;
+	private ActionListener actionListenebtnTornarPrincipal;
 	
 	private String usuari;
 	private int quantitatBotons;
@@ -119,7 +120,15 @@ public class Controlador {
 			}
 		};
 		IniciSesio.getBtnTornarIniciSessio().addActionListener(actionListenerbtnTornarIniciSessio);
+		
+		actionListenebtnTornarPrincipal = new ActionListener() {
 
+			public void actionPerformed(ActionEvent e) {
+				vistaFama.setVisible(false);
+			}
+		};
+		vistaFama.getBtnTornarPrincipal().addActionListener(actionListenebtnTornarPrincipal);
+		
 		// Funcionalidades de VistaPrincipal
 		actionListenerbtnSaloDeLa = new ActionListener() {
 
